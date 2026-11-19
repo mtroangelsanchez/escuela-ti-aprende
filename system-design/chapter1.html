@@ -1,0 +1,1714 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diseño de Sistemas - Escalar de Cero a Millones</title>
+    <meta name="description" content="Guía interactiva de Diseño de Sistemas: Escalar de cero a millones de usuarios. Arquitectura, balanceadores de carga, caché, CDN, sharding y más.">
+    <meta name="author" content="José Ángel Sánchez Pérez">
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Diseño de Sistemas - Escalar de Cero a Millones">
+    <meta property="og:description" content="Guía visual e interactiva de diseño de sistemas a escala.">
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Animated Grid Background -->
+    <div class="bg-grid"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-back">
+                <i class="fas fa-arrow-left"></i> Todos los Ejemplos
+            </a>
+            <a href="chapter1.html" class="nav-logo">
+                <span class="logo-icon">⚙️</span> Ejemplo 1
+            </a>
+            <ul class="nav-menu">
+                <li><a href="#single-server" class="nav-link">Servidor Único</a></li>
+                <li><a href="#database" class="nav-link">Base de Datos</a></li>
+                <li><a href="#load-balancer" class="nav-link">Balanceador</a></li>
+                <li><a href="#cache" class="nav-link">Caché</a></li>
+                <li><a href="#cdn" class="nav-link">CDN</a></li>
+                <li><a href="#scaling" class="nav-link">Escalamiento</a></li>
+                <li><a href="#cloud-practices" class="nav-link">Cloud</a></li>
+                <li><a href="#aws-terraform" class="nav-link">AWS + Terraform</a></li>
+                <li><a href="#docker-local" class="nav-link">Docker</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-badge">
+                <i class="fas fa-rocket"></i> Ejemplo 1 — Diseño de Sistemas
+            </div>
+            <h1 class="hero-title">
+                Escalar de <span class="gradient-text">Cero</span> a<br>
+                <span class="gradient-text">Millones</span> de Usuarios
+            </h1>
+            <p class="hero-subtitle">
+                Diseñar un sistema que soporte millones de usuarios es un viaje de refinamiento continuo.
+                Desde un solo servidor hasta una arquitectura distribuida global.
+            </p>
+            <div class="hero-stats">
+                <div class="hero-stat">
+                    <div class="hero-stat-number">12</div>
+                    <div class="hero-stat-label">Conceptos Clave</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="hero-stat-number">8</div>
+                    <div class="hero-stat-label">Diagramas</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="hero-stat-number">∞</div>
+                    <div class="hero-stat-label">Escalabilidad</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contenido del Ejemplo -->
+    <section class="chapter-section">
+        <div class="chapter-container">
+            <!-- Encabezado -->
+            <div class="chapter-header">
+                <div class="chapter-number">01</div>
+                <h2 class="chapter-title">Escalar de Cero a <span class="highlight">Millones</span></h2>
+            </div>
+
+            <!-- Single Server Setup -->
+            <div class="content-block" id="single-server">
+                <h2><span class="icon cyan"><i class="fas fa-server"></i></span> Configuración de Servidor Único</h2>
+                <p>
+                    Un viaje de mil millas comienza con un solo paso. Para empezar con algo simple, 
+                    todo corre en un solo servidor: web app, base de datos, cache, etc.
+                </p>
+                <div class="diagram-container">
+                    <span class="diagram-label">Figura 1-1</span>
+                    <div class="svg-diagram">
+                        <svg viewBox="0 0 700 320" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="250" y="80" width="200" height="200" rx="12" fill="#0f2137" stroke="#4da8da" stroke-width="2"/>
+                            <text x="350" y="110" text-anchor="middle" fill="#4da8da" font-size="14" font-weight="700">Single Server</text>
+                            <rect x="270" y="125" width="160" height="35" rx="6" fill="rgba(77,168,218,0.1)" stroke="#4da8da" stroke-width="1"/>
+                            <text x="350" y="147" text-anchor="middle" fill="#f0f4f8" font-size="11">🌐 Web App</text>
+                            <rect x="270" y="170" width="160" height="35" rx="6" fill="rgba(0,123,255,0.1)" stroke="#007bff" stroke-width="1"/>
+                            <text x="350" y="192" text-anchor="middle" fill="#f0f4f8" font-size="11">🗄️ Database</text>
+                            <rect x="270" y="215" width="160" height="35" rx="6" fill="rgba(108,99,255,0.1)" stroke="#6c63ff" stroke-width="1"/>
+                            <text x="350" y="237" text-anchor="middle" fill="#f0f4f8" font-size="11">⚡ Cache</text>
+                            <circle cx="100" cy="180" r="25" fill="rgba(77,168,218,0.15)" stroke="#4da8da" stroke-width="1.5"/>
+                            <text x="100" y="185" text-anchor="middle" fill="#f0f4f8" font-size="20">👤</text>
+                            <text x="100" y="220" text-anchor="middle" fill="#8ba4bc" font-size="10">Users</text>
+                            <line x1="130" y1="180" x2="245" y2="180" stroke="#4da8da" stroke-width="2" stroke-dasharray="6,3"/>
+                            <polygon points="245,175 255,180 245,185" fill="#4da8da"/>
+                            <rect x="250" y="10" width="120" height="40" rx="8" fill="rgba(108,99,255,0.15)" stroke="#6c63ff" stroke-width="1"/>
+                            <text x="310" y="35" text-anchor="middle" fill="#6c63ff" font-size="11" font-weight="600">DNS Provider</text>
+                            <line x1="310" y1="50" x2="310" y2="78" stroke="#6c63ff" stroke-width="1" stroke-dasharray="4,2"/>
+                        </svg>
+                    </div>
+                    <p class="diagram-caption">Todo corre en un solo servidor — web app, database y cache</p>
+                </div>
+
+                <h3>Flujo de Solicitudes</h3>
+                <div class="flow-steps">
+                    <div class="flow-step">
+                        <div class="flow-step-number">1</div>
+                        <div class="flow-step-content">
+                            <p><strong>DNS Lookup:</strong> Los usuarios acceden a sitios web mediante nombres de dominio (api.mysite.com). El DNS es un servicio de pago proporcionado por terceros.</p>
+                        </div>
+                    </div>
+                    <div class="flow-step">
+                        <div class="flow-step-number">2</div>
+                        <div class="flow-step-content">
+                            <p><strong>IP Address:</strong> La dirección IP (ej: 15.125.23.214) es retornada al navegador o app móvil.</p>
+                        </div>
+                    </div>
+                    <div class="flow-step">
+                        <div class="flow-step-number">3</div>
+                        <div class="flow-step-content">
+                            <p><strong>HTTP Request:</strong> Una vez obtenida la IP, las solicitudes HTTP se envían directamente al servidor web.</p>
+                        </div>
+                    </div>
+                    <div class="flow-step">
+                        <div class="flow-step-number">4</div>
+                        <div class="flow-step-content">
+                            <p><strong>Response:</strong> El servidor web retorna páginas HTML o respuestas JSON para renderizado.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>Fuentes de Tráfico</h3>
+                <div class="comparison-grid">
+                    <div class="comparison-card sql">
+                        <h4>🌐 Web Application</h4>
+                        <ul>
+                            <li>Server-side: Java, Python, etc.</li>
+                            <li>Client-side: HTML, JavaScript</li>
+                            <li>Maneja lógica de negocio y storage</li>
+                        </ul>
+                    </div>
+                    <div class="comparison-card nosql">
+                        <h4>📱 Mobile Application</h4>
+                        <ul>
+                            <li>Protocolo HTTP para comunicación</li>
+                            <li>JSON como formato de respuesta API</li>
+                            <li>Simplicidad en transferencia de datos</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="code-block">
+                    <span class="comment">// Example API Response</span><br>
+                    <span class="keyword">GET</span> /users/12<br>
+                    {<br>
+                    &nbsp;&nbsp;<span class="string">"id"</span>: 12,<br>
+                    &nbsp;&nbsp;<span class="string">"firstName"</span>: <span class="string">"John"</span>,<br>
+                    &nbsp;&nbsp;<span class="string">"lastName"</span>: <span class="string">"Doe"</span>,<br>
+                    &nbsp;&nbsp;<span class="string">"createdAt"</span>: <span class="string">"2024-01-15"</span><br>
+                    }
+                </div>
+            </div>
+
+            <!-- Database Section -->
+            <div class="content-block" id="database">
+                <h2><span class="icon orange"><i class="fas fa-database"></i></span> Base de Datos</h2>
+                <p>
+                    Con el crecimiento de la base de usuarios, un solo servidor no es suficiente. 
+                    Necesitamos separar el tráfico web/mobile (web tier) de la base de datos (data tier) 
+                    para escalarlos independientemente.
+                </p>
+                <div class="diagram-container">
+                    <span class="diagram-label">Figura 1-3</span>
+                    <div class="svg-diagram">
+                        <svg viewBox="0 0 700 280" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="80" cy="140" r="22" fill="rgba(77,168,218,0.15)" stroke="#4da8da" stroke-width="1.5"/>
+                            <text x="80" y="145" text-anchor="middle" fill="#f0f4f8" font-size="18">👥</text>
+                            <rect x="220" y="100" width="150" height="80" rx="10" fill="#0f2137" stroke="#4da8da" stroke-width="2"/>
+                            <text x="295" y="135" text-anchor="middle" fill="#4da8da" font-size="12" font-weight="600">Web Server</text>
+                            <text x="295" y="155" text-anchor="middle" fill="#8ba4bc" font-size="10">Web/Mobile Traffic</text>
+                            <rect x="480" y="100" width="150" height="80" rx="10" fill="#0f2137" stroke="#007bff" stroke-width="2"/>
+                            <text x="555" y="135" text-anchor="middle" fill="#007bff" font-size="12" font-weight="600">Database</text>
+                            <text x="555" y="155" text-anchor="middle" fill="#8ba4bc" font-size="10">Data Tier</text>
+                            <line x1="105" y1="140" x2="215" y2="140" stroke="#4da8da" stroke-width="2" stroke-dasharray="6,3"/>
+                            <polygon points="215,135 225,140 215,145" fill="#4da8da"/>
+                            <line x1="375" y1="140" x2="475" y2="140" stroke="#007bff" stroke-width="2" stroke-dasharray="6,3"/>
+                            <polygon points="475,135 485,140 475,145" fill="#007bff"/>
+                            <text x="295" y="210" text-anchor="middle" fill="#4da8da" font-size="9" font-weight="600">WEB TIER</text>
+                            <text x="555" y="210" text-anchor="middle" fill="#007bff" font-size="9" font-weight="600">DATA TIER</text>
+                        </svg>
+                    </div>
+                    <p class="diagram-caption">Separación de web tier y data tier para escalamiento independiente</p>
+                </div>
+
+                <h3>¿Qué base de datos usar?</h3>
+                <div class="comparison-grid">
+                    <div class="comparison-card sql">
+                        <h4>🔗 Relational (SQL)</h4>
+                        <ul>
+                            <li>MySQL, PostgreSQL, Oracle</li>
+                            <li>Datos en tablas y filas</li>
+                            <li>Operaciones JOIN entre tablas</li>
+                            <li>40+ años de historia probada</li>
+                        </ul>
+                    </div>
+                    <div class="comparison-card nosql">
+                        <h4>🔥 Non-Relational (NoSQL)</h4>
+                        <ul>
+                            <li>CouchDB, Neo4j, Cassandra, DynamoDB</li>
+                            <li>Key-value, Graph, Column, Document</li>
+                            <li>No soportan JOIN generalmente</li>
+                            <li>Super-low latency, datos no estructurados</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="info-card orange">
+                    <h4>💡 ¿Cuándo usar NoSQL?</h4>
+                    <p>Tu aplicación requiere super-baja latencia • Datos no estructurados • Solo necesitas serializar/deserializar (JSON, XML, YAML) • Necesitas almacenar cantidades masivas de datos.</p>
+                </div>
+            </div>
+
+            <!-- Vertical vs Horizontal Scaling -->
+            <div class="content-block" id="scaling-types">
+                <h2><span class="icon purple"><i class="fas fa-expand-arrows-alt"></i></span> Escalamiento Vertical vs Horizontal</h2>
+                <div class="scaling-grid">
+                    <div class="scaling-card">
+                        <div class="scaling-icon">⬆️</div>
+                        <h4>Vertical Scaling</h4>
+                        <div class="subtitle">"Scale Up"</div>
+                        <p>Agregar más poder (CPU, RAM) a tus servidores existentes. Simple pero con límites duros.</p>
+                    </div>
+                    <div class="scaling-card">
+                        <div class="scaling-icon">↔️</div>
+                        <h4>Horizontal Scaling</h4>
+                        <div class="subtitle">"Scale Out"</div>
+                        <p>Agregar más servidores a tu pool de recursos. Más deseable para aplicaciones a gran escala.</p>
+                    </div>
+                </div>
+                <div class="info-card">
+                    <h4>⚠️ Limitaciones del Vertical Scaling</h4>
+                    <p>• Tiene un límite duro — es imposible agregar CPU/memoria ilimitada a un solo servidor.<br>
+                    • No tiene failover ni redundancia — si el servidor cae, todo cae con él.</p>
+                </div>
+            </div>
+
+            <!-- Load Balancer -->
+            <div class="content-block" id="load-balancer">
+                <h2><span class="icon cyan"><i class="fas fa-balance-scale"></i></span> Balanceador de Carga</h2>
+                <p>
+                    Un load balancer distribuye uniformemente el tráfico entrante entre los servidores web 
+                    definidos en un conjunto balanceado. Los usuarios se conectan a la IP pública del load balancer.
+                </p>
+                <div class="diagram-container">
+                    <span class="diagram-label">Figura 1-4</span>
+                    <div class="svg-diagram">
+                        <svg viewBox="0 0 700 350" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="80" cy="175" r="22" fill="rgba(77,168,218,0.15)" stroke="#4da8da" stroke-width="1.5"/>
+                            <text x="80" y="180" text-anchor="middle" fill="#f0f4f8" font-size="18">👥</text>
+                            <rect x="220" y="140" width="140" height="70" rx="12" fill="rgba(108,99,255,0.15)" stroke="#6c63ff" stroke-width="2"/>
+                            <text x="290" y="170" text-anchor="middle" fill="#6c63ff" font-size="11" font-weight="700">Load Balancer</text>
+                            <text x="290" y="190" text-anchor="middle" fill="#8ba4bc" font-size="9">Public IP</text>
+                            <rect x="470" y="70" width="140" height="60" rx="8" fill="#0f2137" stroke="#4da8da" stroke-width="1.5"/>
+                            <text x="540" y="100" text-anchor="middle" fill="#4da8da" font-size="11" font-weight="600">Server 1</text>
+                            <text x="540" y="118" text-anchor="middle" fill="#8ba4bc" font-size="9">Private IP</text>
+                            <rect x="470" y="220" width="140" height="60" rx="8" fill="#0f2137" stroke="#4da8da" stroke-width="1.5"/>
+                            <text x="540" y="250" text-anchor="middle" fill="#4da8da" font-size="11" font-weight="600">Server 2</text>
+                            <text x="540" y="268" text-anchor="middle" fill="#8ba4bc" font-size="9">Private IP</text>
+                            <line x1="105" y1="175" x2="215" y2="175" stroke="#4da8da" stroke-width="2" stroke-dasharray="6,3"/>
+                            <polygon points="215,170 225,175 215,180" fill="#4da8da"/>
+                            <line x1="365" y1="160" x2="465" y2="100" stroke="#6c63ff" stroke-width="1.5"/>
+                            <polygon points="462,95 472,98 462,105" fill="#6c63ff"/>
+                            <line x1="365" y1="190" x2="465" y2="250" stroke="#6c63ff" stroke-width="1.5"/>
+                            <polygon points="462,245 472,252 462,255" fill="#6c63ff"/>
+                        </svg>
+                    </div>
+                    <p class="diagram-caption">Load balancer distribuyendo tráfico entre múltiples servidores con IPs privadas</p>
+                </div>
+                <div class="advantages-list">
+                    <div class="advantage-item">
+                        <span class="check">✓</span>
+                        <p><strong>Failover:</strong> Si Server 1 cae, todo el tráfico se redirige a Server 2</p>
+                    </div>
+                    <div class="advantage-item">
+                        <span class="check">✓</span>
+                        <p><strong>Escalabilidad:</strong> Solo agrega más servidores al pool cuando el tráfico crece</p>
+                    </div>
+                    <div class="advantage-item">
+                        <span class="check">✓</span>
+                        <p><strong>Seguridad:</strong> Servidores web usan IPs privadas, inaccesibles desde internet</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Database Replication -->
+            <div class="content-block" id="db-replication">
+                <h2><span class="icon orange"><i class="fas fa-clone"></i></span> Replicación de Base de Datos</h2>
+                <p>
+                    La replicación de base de datos usa una relación master/slave. El master soporta operaciones 
+                    de escritura. Los slaves reciben copias de los datos y solo soportan lecturas.
+                </p>
+                <div class="diagram-container">
+                    <span class="diagram-label">Figura 1-5</span>
+                    <div class="svg-diagram">
+                        <svg viewBox="0 0 700 300" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="270" y="30" width="160" height="70" rx="10" fill="rgba(0,123,255,0.15)" stroke="#007bff" stroke-width="2"/>
+                            <text x="350" y="60" text-anchor="middle" fill="#007bff" font-size="12" font-weight="700">Master DB</text>
+                            <text x="350" y="80" text-anchor="middle" fill="#8ba4bc" font-size="9">Write Operations</text>
+                            <rect x="80" y="180" width="130" height="60" rx="8" fill="rgba(77,168,218,0.1)" stroke="#4da8da" stroke-width="1.5"/>
+                            <text x="145" y="207" text-anchor="middle" fill="#4da8da" font-size="11" font-weight="600">Slave 1</text>
+                            <text x="145" y="225" text-anchor="middle" fill="#8ba4bc" font-size="9">Read</text>
+                            <rect x="285" y="180" width="130" height="60" rx="8" fill="rgba(77,168,218,0.1)" stroke="#4da8da" stroke-width="1.5"/>
+                            <text x="350" y="207" text-anchor="middle" fill="#4da8da" font-size="11" font-weight="600">Slave 2</text>
+                            <text x="350" y="225" text-anchor="middle" fill="#8ba4bc" font-size="9">Read</text>
+                            <rect x="490" y="180" width="130" height="60" rx="8" fill="rgba(77,168,218,0.1)" stroke="#4da8da" stroke-width="1.5"/>
+                            <text x="555" y="207" text-anchor="middle" fill="#4da8da" font-size="11" font-weight="600">Slave 3</text>
+                            <text x="555" y="225" text-anchor="middle" fill="#8ba4bc" font-size="9">Read</text>
+                            <line x1="310" y1="100" x2="160" y2="175" stroke="#007bff" stroke-width="1.5" stroke-dasharray="5,3"/>
+                            <line x1="350" y1="100" x2="350" y2="175" stroke="#007bff" stroke-width="1.5" stroke-dasharray="5,3"/>
+                            <line x1="390" y1="100" x2="540" y2="175" stroke="#007bff" stroke-width="1.5" stroke-dasharray="5,3"/>
+                            <text x="350" y="145" text-anchor="middle" fill="#007bff" font-size="9" font-style="italic">replication</text>
+                        </svg>
+                    </div>
+                    <p class="diagram-caption">Master database con múltiples slave databases para lecturas distribuidas</p>
+                </div>
+                <div class="advantages-list">
+                    <div class="advantage-item">
+                        <span class="check">✓</span>
+                        <p><strong>Performance:</strong> Escrituras en master, lecturas distribuidas en slaves — más queries en paralelo</p>
+                    </div>
+                    <div class="advantage-item">
+                        <span class="check">✓</span>
+                        <p><strong>Reliability:</strong> Datos replicados en múltiples ubicaciones — sin pérdida ante desastres</p>
+                    </div>
+                    <div class="advantage-item">
+                        <span class="check">✓</span>
+                        <p><strong>High Availability:</strong> El sitio sigue operando incluso si una DB está offline</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cache Section -->
+            <div class="content-block" id="cache">
+                <h2><span class="icon purple"><i class="fas fa-bolt"></i></span> Caché</h2>
+                <p>
+                    Un cache es un área de almacenamiento temporal que guarda resultados de respuestas costosas 
+                    o datos frecuentemente accedidos en memoria, para que las solicitudes subsecuentes se sirvan más rápido.
+                </p>
+                <div class="diagram-container">
+                    <span class="diagram-label">Figura 1-7 — Read-through Cache</span>
+                    <div class="svg-diagram">
+                        <svg viewBox="0 0 700 250" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="50" y="90" width="130" height="70" rx="10" fill="#0f2137" stroke="#4da8da" stroke-width="2"/>
+                            <text x="115" y="125" text-anchor="middle" fill="#4da8da" font-size="11" font-weight="600">Web Server</text>
+                            <text x="115" y="143" text-anchor="middle" fill="#8ba4bc" font-size="9">Request</text>
+                            <rect x="280" y="90" width="130" height="70" rx="10" fill="rgba(108,99,255,0.15)" stroke="#6c63ff" stroke-width="2"/>
+                            <text x="345" y="120" text-anchor="middle" fill="#6c63ff" font-size="11" font-weight="700">Cache</text>
+                            <text x="345" y="140" text-anchor="middle" fill="#8ba4bc" font-size="9">Memcached/Redis</text>
+                            <rect x="520" y="90" width="130" height="70" rx="10" fill="rgba(0,123,255,0.15)" stroke="#007bff" stroke-width="2"/>
+                            <text x="585" y="125" text-anchor="middle" fill="#007bff" font-size="11" font-weight="600">Database</text>
+                            <line x1="185" y1="115" x2="275" y2="115" stroke="#6c63ff" stroke-width="2"/>
+                            <polygon points="275,110 285,115 275,120" fill="#6c63ff"/>
+                            <text x="230" y="108" text-anchor="middle" fill="#6c63ff" font-size="8">1. Check</text>
+                            <path d="M 345 165 Q 345 200 450 200 Q 555 200 555 165" fill="none" stroke="#007bff" stroke-width="1.5" stroke-dasharray="5,3"/>
+                            <text x="450" y="215" text-anchor="middle" fill="#007bff" font-size="8">2. Cache miss → Query DB</text>
+                            <line x1="415" y1="125" x2="515" y2="125" stroke="#007bff" stroke-width="1.5" stroke-dasharray="5,3"/>
+                            <polygon points="515,120 525,125 515,130" fill="#007bff"/>
+                        </svg>
+                    </div>
+                    <p class="diagram-caption">Estrategia Read-through: verificar cache primero, luego consultar DB si es necesario</p>
+                </div>
+                <h3>Consideraciones del Caché</h3>
+                <div class="considerations-grid">
+                    <div class="consideration-card">
+                        <h5>🎯 Cuándo usar cache</h5>
+                        <p>Datos leídos frecuentemente pero modificados infrecuentemente. No ideal para datos persistentes.</p>
+                    </div>
+                    <div class="consideration-card">
+                        <h5>⏰ Expiration Policy</h5>
+                        <p>No muy corta (recargas frecuentes) ni muy larga (datos obsoletos). Encontrar el balance.</p>
+                    </div>
+                    <div class="consideration-card">
+                        <h5>🔄 Consistency</h5>
+                        <p>Mantener data store y cache sincronizados. Desafiante en múltiples regiones.</p>
+                    </div>
+                    <div class="consideration-card">
+                        <h5>🛡️ Mitigar Failures</h5>
+                        <p>Múltiples cache servers en diferentes data centers para evitar SPOF.</p>
+                    </div>
+                    <div class="consideration-card">
+                        <h5>🗑️ Eviction Policy</h5>
+                        <p>LRU (más popular), LFU, FIFO — cuando el cache está lleno, se eliminan items existentes.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CDN Section -->
+            <div class="content-block" id="cdn">
+                <h2><span class="icon cyan"><i class="fas fa-globe"></i></span> Red de Distribución de Contenido (CDN)</h2>
+                <p>
+                    Un CDN es una red de servidores geográficamente dispersos usados para entregar contenido estático. 
+                    Los servidores CDN cachean contenido estático como imágenes, videos, CSS, JavaScript, etc.
+                </p>
+                <div class="diagram-container">
+                    <span class="diagram-label">Figura 1-10 — CDN Workflow</span>
+                    <div class="svg-diagram">
+                        <svg viewBox="0 0 700 320" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="350" cy="100" r="60" fill="none" stroke="#4da8da" stroke-width="1.5" stroke-dasharray="4,2"/>
+                            <circle cx="350" cy="100" r="40" fill="rgba(77,168,218,0.08)" stroke="#4da8da" stroke-width="1"/>
+                            <text x="350" y="95" text-anchor="middle" fill="#4da8da" font-size="11" font-weight="700">CDN</text>
+                            <text x="350" y="112" text-anchor="middle" fill="#8ba4bc" font-size="9">Edge Servers</text>
+                            <circle cx="120" cy="250" r="20" fill="rgba(77,168,218,0.15)" stroke="#4da8da" stroke-width="1.5"/>
+                            <text x="120" y="255" text-anchor="middle" fill="#f0f4f8" font-size="14">👤</text>
+                            <text x="120" y="285" text-anchor="middle" fill="#8ba4bc" font-size="9">User A</text>
+                            <circle cx="580" cy="250" r="20" fill="rgba(108,99,255,0.15)" stroke="#6c63ff" stroke-width="1.5"/>
+                            <text x="580" y="255" text-anchor="middle" fill="#f0f4f8" font-size="14">👤</text>
+                            <text x="580" y="285" text-anchor="middle" fill="#8ba4bc" font-size="9">User B</text>
+                            <rect x="290" y="240" width="120" height="50" rx="8" fill="rgba(0,123,255,0.15)" stroke="#007bff" stroke-width="1.5"/>
+                            <text x="350" y="265" text-anchor="middle" fill="#007bff" font-size="10" font-weight="600">Origin Server</text>
+                            <text x="350" y="280" text-anchor="middle" fill="#8ba4bc" font-size="8">S3 / Web Server</text>
+                            <line x1="140" y1="235" x2="310" y2="145" stroke="#4da8da" stroke-width="1.5"/>
+                            <text x="200" y="180" fill="#4da8da" font-size="8">request</text>
+                            <line x1="580" y1="230" x2="395" y2="145" stroke="#6c63ff" stroke-width="1.5"/>
+                            <text x="510" y="180" fill="#6c63ff" font-size="8">cached!</text>
+                            <line x1="350" y1="165" x2="350" y2="235" stroke="#007bff" stroke-width="1" stroke-dasharray="4,2"/>
+                            <text x="380" y="200" fill="#007bff" font-size="8">miss → origin</text>
+                            <rect x="430" y="70" width="60" height="25" rx="12" fill="rgba(32,201,151,0.2)" stroke="#20c997" stroke-width="1"/>
+                            <text x="460" y="87" text-anchor="middle" fill="#20c997" font-size="9" font-weight="600">TTL</text>
+                        </svg>
+                    </div>
+                    <p class="diagram-caption">CDN workflow: cache en edge servers con TTL, fallback al origin server</p>
+                </div>
+                <h3>Consideraciones del CDN</h3>
+                <div class="considerations-grid">
+                    <div class="consideration-card">
+                        <h5>💰 Costo</h5>
+                        <p>CDNs cobran por transferencia de datos. No cachear assets poco usados.</p>
+                    </div>
+                    <div class="consideration-card">
+                        <h5>⏱️ Cache Expiry</h5>
+                        <p>Ni muy largo (contenido obsoleto) ni muy corto (recargas repetidas del origin).</p>
+                    </div>
+                    <div class="consideration-card">
+                        <h5>🔄 CDN Fallback</h5>
+                        <p>Clientes deben detectar outages del CDN y solicitar recursos directamente del origin.</p>
+                    </div>
+                    <div class="consideration-card">
+                        <h5>🗂️ Invalidación</h5>
+                        <p>APIs del vendor para invalidar, o versionado de objetos (image.png?v=2).</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stateless Web Tier -->
+            <div class="content-block" id="stateless">
+                <h2><span class="icon orange"><i class="fas fa-layer-group"></i></span> Capa Web Sin Estado</h2>
+                <p>
+                    Para escalar horizontalmente el web tier, necesitamos mover el estado (session data) 
+                    fuera del web tier a un almacenamiento persistente compartido.
+                </p>
+                <div class="scaling-grid">
+                    <div class="scaling-card">
+                        <div class="scaling-icon">🔒</div>
+                        <h4>Stateful</h4>
+                        <div class="subtitle">Sticky Sessions</div>
+                        <p>Cada request del mismo cliente debe ir al mismo servidor. Difícil agregar/remover servidores.</p>
+                    </div>
+                    <div class="scaling-card">
+                        <div class="scaling-icon">🔓</div>
+                        <h4>Stateless</h4>
+                        <div class="subtitle">Shared Data Store</div>
+                        <p>Requests pueden ir a cualquier servidor. Estado en Redis/Memcached/NoSQL. Auto-scaling fácil.</p>
+                    </div>
+                </div>
+                <div class="info-card purple">
+                    <h4>🎯 Shared Data Store</h4>
+                    <p>NoSQL es la opción elegida por su facilidad de escalamiento. Autoscaling = agregar o remover servidores automáticamente basado en la carga de tráfico.</p>
+                </div>
+            </div>
+
+            <!-- Data Centers -->
+            <div class="content-block" id="data-centers">
+                <h2><span class="icon purple"><i class="fas fa-network-wired"></i></span> Centros de Datos</h2>
+                <p>
+                    Para mejorar la disponibilidad y experiencia de usuario globalmente, soportar múltiples 
+                    data centers es crucial. Los usuarios son geo-routed al data center más cercano.
+                </p>
+                <div class="diagram-container">
+                    <span class="diagram-label">Figura 1-15 — Multi Data Center</span>
+                    <div class="svg-diagram">
+                        <svg viewBox="0 0 700 280" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="270" y="20" width="160" height="45" rx="10" fill="rgba(108,99,255,0.15)" stroke="#6c63ff" stroke-width="2"/>
+                            <text x="350" y="45" text-anchor="middle" fill="#6c63ff" font-size="11" font-weight="700">GeoDNS</text>
+                            <text x="350" y="58" text-anchor="middle" fill="#8ba4bc" font-size="8">Geo-routing</text>
+                            <rect x="60" y="130" width="200" height="120" rx="12" fill="rgba(77,168,218,0.08)" stroke="#4da8da" stroke-width="1.5"/>
+                            <text x="160" y="155" text-anchor="middle" fill="#4da8da" font-size="11" font-weight="700">US-East (DC 1)</text>
+                            <rect x="80" y="170" width="70" height="30" rx="5" fill="#0f2137" stroke="#4da8da" stroke-width="1"/>
+                            <text x="115" y="189" text-anchor="middle" fill="#8ba4bc" font-size="8">Web Servers</text>
+                            <rect x="170" y="170" width="70" height="30" rx="5" fill="#0f2137" stroke="#007bff" stroke-width="1"/>
+                            <text x="205" y="189" text-anchor="middle" fill="#8ba4bc" font-size="8">Database</text>
+                            <rect x="80" y="210" width="160" height="25" rx="5" fill="#0f2137" stroke="#6c63ff" stroke-width="1"/>
+                            <text x="160" y="227" text-anchor="middle" fill="#8ba4bc" font-size="8">Cache + Queue</text>
+                            <rect x="440" y="130" width="200" height="120" rx="12" fill="rgba(0,123,255,0.08)" stroke="#007bff" stroke-width="1.5"/>
+                            <text x="540" y="155" text-anchor="middle" fill="#007bff" font-size="11" font-weight="700">US-West (DC 2)</text>
+                            <rect x="460" y="170" width="70" height="30" rx="5" fill="#0f2137" stroke="#4da8da" stroke-width="1"/>
+                            <text x="495" y="189" text-anchor="middle" fill="#8ba4bc" font-size="8">Web Servers</text>
+                            <rect x="550" y="170" width="70" height="30" rx="5" fill="#0f2137" stroke="#007bff" stroke-width="1"/>
+                            <text x="585" y="189" text-anchor="middle" fill="#8ba4bc" font-size="8">Database</text>
+                            <rect x="460" y="210" width="160" height="25" rx="5" fill="#0f2137" stroke="#6c63ff" stroke-width="1"/>
+                            <text x="540" y="227" text-anchor="middle" fill="#8ba4bc" font-size="8">Cache + Queue</text>
+                            <line x1="310" y1="68" x2="180" y2="125" stroke="#4da8da" stroke-width="1.5"/>
+                            <line x1="390" y1="68" x2="520" y2="125" stroke="#007bff" stroke-width="1.5"/>
+                            <line x1="265" y1="190" x2="435" y2="190" stroke="#20c997" stroke-width="1.5" stroke-dasharray="6,3"/>
+                            <text x="350" y="185" text-anchor="middle" fill="#20c997" font-size="8">Data Sync</text>
+                        </svg>
+                    </div>
+                    <p class="diagram-caption">Multi data center con GeoDNS routing y sincronización de datos</p>
+                </div>
+            </div>
+
+            <!-- Message Queue -->
+            <div class="content-block" id="message-queue">
+                <h2><span class="icon cyan"><i class="fas fa-envelope-open-text"></i></span> Cola de Mensajes</h2>
+                <p>
+                    Una message queue es un componente durable que soporta comunicación asíncrona. 
+                    Sirve como buffer y distribuye requests asíncronos.
+                </p>
+                <div class="diagram-container">
+                    <span class="diagram-label">Figura 1-18 — Photo Processing Queue</span>
+                    <div class="svg-diagram">
+                        <svg viewBox="0 0 700 220" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="50" y="70" width="120" height="80" rx="10" fill="rgba(77,168,218,0.1)" stroke="#4da8da" stroke-width="1.5"/>
+                            <text x="110" y="100" text-anchor="middle" fill="#4da8da" font-size="10" font-weight="600">Web Servers</text>
+                            <text x="110" y="118" text-anchor="middle" fill="#8ba4bc" font-size="8">(Producers)</text>
+                            <text x="110" y="138" text-anchor="middle" fill="#8ba4bc" font-size="8">📸 Photo Jobs</text>
+                            <rect x="260" y="70" width="180" height="80" rx="10" fill="rgba(0,123,255,0.15)" stroke="#007bff" stroke-width="2"/>
+                            <text x="350" y="100" text-anchor="middle" fill="#007bff" font-size="11" font-weight="700">Message Queue</text>
+                            <text x="350" y="120" text-anchor="middle" fill="#8ba4bc" font-size="9">📨 📨 📨 📨 📨</text>
+                            <text x="350" y="138" text-anchor="middle" fill="#8ba4bc" font-size="8">Durable, In-Memory</text>
+                            <rect x="530" y="70" width="120" height="80" rx="10" fill="rgba(108,99,255,0.1)" stroke="#6c63ff" stroke-width="1.5"/>
+                            <text x="590" y="100" text-anchor="middle" fill="#6c63ff" font-size="10" font-weight="600">Workers</text>
+                            <text x="590" y="118" text-anchor="middle" fill="#8ba4bc" font-size="8">(Consumers)</text>
+                            <text x="590" y="138" text-anchor="middle" fill="#8ba4bc" font-size="8">✂️ Crop, Blur, Sharp</text>
+                            <line x1="175" y1="110" x2="255" y2="110" stroke="#4da8da" stroke-width="2"/>
+                            <polygon points="255,105 265,110 255,115" fill="#4da8da"/>
+                            <line x1="445" y1="110" x2="525" y2="110" stroke="#6c63ff" stroke-width="2"/>
+                            <polygon points="525,105 535,110 525,115" fill="#6c63ff"/>
+                            <text x="350" y="180" text-anchor="middle" fill="#20c997" font-size="9">↕️ Producer y Consumer se escalan independientemente</text>
+                        </svg>
+                    </div>
+                    <p class="diagram-caption">Desacoplamiento con message queue — producers y consumers escalan independientemente</p>
+                </div>
+                <div class="info-card">
+                    <h4>🔑 Ventaja del Desacoplamiento</h4>
+                    <p>El producer puede publicar mensajes cuando el consumer no está disponible. El consumer puede leer mensajes cuando el producer no está disponible. Escalamiento independiente según la carga.</p>
+                </div>
+            </div>
+
+            <!-- Database Scaling / Sharding -->
+            <div class="content-block" id="scaling">
+                <h2><span class="icon orange"><i class="fas fa-th-large"></i></span> Escalamiento de Base de Datos — Sharding</h2>
+                <p>
+                    Sharding separa bases de datos grandes en partes más pequeñas y manejables llamadas shards. 
+                    Cada shard comparte el mismo schema pero los datos son únicos por shard.
+                </p>
+                <div class="diagram-container">
+                    <span class="diagram-label">Figura 1-21 — Sharded Databases</span>
+                    <div class="svg-diagram">
+                        <svg viewBox="0 0 700 250" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="270" y="20" width="160" height="45" rx="10" fill="rgba(108,99,255,0.15)" stroke="#6c63ff" stroke-width="2"/>
+                            <text x="350" y="42" text-anchor="middle" fill="#6c63ff" font-size="10" font-weight="700">Hash Function</text>
+                            <text x="350" y="57" text-anchor="middle" fill="#8ba4bc" font-size="8">user_id % 4</text>
+                            <rect x="40" y="130" width="120" height="80" rx="8" fill="rgba(77,168,218,0.1)" stroke="#4da8da" stroke-width="1.5"/>
+                            <text x="100" y="160" text-anchor="middle" fill="#4da8da" font-size="10" font-weight="600">Shard 0</text>
+                            <text x="100" y="180" text-anchor="middle" fill="#8ba4bc" font-size="8">user_id: 0,4,8...</text>
+                            <rect x="200" y="130" width="120" height="80" rx="8" fill="rgba(0,123,255,0.1)" stroke="#007bff" stroke-width="1.5"/>
+                            <text x="260" y="160" text-anchor="middle" fill="#007bff" font-size="10" font-weight="600">Shard 1</text>
+                            <text x="260" y="180" text-anchor="middle" fill="#8ba4bc" font-size="8">user_id: 1,5,9...</text>
+                            <rect x="380" y="130" width="120" height="80" rx="8" fill="rgba(108,99,255,0.1)" stroke="#6c63ff" stroke-width="1.5"/>
+                            <text x="440" y="160" text-anchor="middle" fill="#6c63ff" font-size="10" font-weight="600">Shard 2</text>
+                            <text x="440" y="180" text-anchor="middle" fill="#8ba4bc" font-size="8">user_id: 2,6,10...</text>
+                            <rect x="540" y="130" width="120" height="80" rx="8" fill="rgba(32,201,151,0.1)" stroke="#20c997" stroke-width="1.5"/>
+                            <text x="600" y="160" text-anchor="middle" fill="#20c997" font-size="10" font-weight="600">Shard 3</text>
+                            <text x="600" y="180" text-anchor="middle" fill="#8ba4bc" font-size="8">user_id: 3,7,11...</text>
+                            <line x1="300" y1="68" x2="100" y2="125" stroke="#4da8da" stroke-width="1" stroke-dasharray="4,2"/>
+                            <line x1="330" y1="68" x2="260" y2="125" stroke="#007bff" stroke-width="1" stroke-dasharray="4,2"/>
+                            <line x1="370" y1="68" x2="440" y2="125" stroke="#6c63ff" stroke-width="1" stroke-dasharray="4,2"/>
+                            <line x1="400" y1="68" x2="600" y2="125" stroke="#20c997" stroke-width="1" stroke-dasharray="4,2"/>
+                        </svg>
+                    </div>
+                    <p class="diagram-caption">Datos distribuidos en shards usando hash function sobre user_id</p>
+                </div>
+                <h3>Desafíos del Sharding</h3>
+                <div class="considerations-grid">
+                    <div class="consideration-card">
+                        <h5>🔄 Redistribución</h5>
+                        <p>Necesario cuando un shard no puede contener más datos. El hashing consistente resuelve esto.</p>
+                    </div>
+                    <div class="consideration-card">
+                        <h5>🌟 Problema de Celebridades</h5>
+                        <p>Clave caliente — acceso excesivo a un shard específico. Solución: shard dedicado por celebridad.</p>
+                    </div>
+                    <div class="consideration-card">
+                        <h5>🔗 Join y Desnormalización</h5>
+                        <p>Difícil hacer JOINs entre shards. Solución: desnormalizar para consultas en una sola tabla.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Logging, Metrics, Automation -->
+            <div class="content-block" id="observability">
+                <h2><span class="icon purple"><i class="fas fa-chart-line"></i></span> Registros, Métricas y Automatización</h2>
+                <div class="advantages-list">
+                    <div class="advantage-item">
+                        <span class="check">📊</span>
+                        <p><strong>Registros:</strong> Monitorear logs de errores a nivel de servidor o agregar a un servicio centralizado</p>
+                    </div>
+                    <div class="advantage-item">
+                        <span class="check">📈</span>
+                        <p><strong>Métricas:</strong> Nivel de host (CPU, Memoria), Agregado (capa de BD, capa de Caché), Negocio (DAU, Ingresos)</p>
+                    </div>
+                    <div class="advantage-item">
+                        <span class="check">🤖</span>
+                        <p><strong>Automatización:</strong> CI/CD, build/test/deploy automatizado para mejorar productividad</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mejores Prácticas en la Nube -->
+            <div class="content-block" id="cloud-practices">
+                <h2><span class="icon cyan"><i class="fas fa-cloud"></i></span> Mejores Prácticas Actuales en la Nube</h2>
+                <p>
+                    Los conceptos de este ejemplo se implementan directamente con servicios administrados de los principales 
+                    proveedores cloud. A continuación, un mapeo práctico de cada componente con sus equivalentes en AWS, GCP y Azure.
+                </p>
+
+                <!-- Tabla comparativa de servicios -->
+                <div class="diagram-container">
+                    <span class="diagram-label">Mapeo de Componentes → Servicios Cloud</span>
+                    <div class="svg-diagram">
+                        <svg viewBox="0 0 750 420" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Header -->
+                            <rect x="20" y="10" width="140" height="35" rx="6" fill="rgba(77,168,218,0.15)" stroke="#4da8da" stroke-width="1"/>
+                            <text x="90" y="32" text-anchor="middle" fill="#4da8da" font-size="10" font-weight="700">Componente</text>
+                            <rect x="175" y="10" width="175" height="35" rx="6" fill="rgba(255,153,0,0.15)" stroke="#ff9900" stroke-width="1"/>
+                            <text x="262" y="32" text-anchor="middle" fill="#ff9900" font-size="10" font-weight="700">☁️ AWS</text>
+                            <rect x="365" y="10" width="175" height="35" rx="6" fill="rgba(66,133,244,0.15)" stroke="#4285f4" stroke-width="1"/>
+                            <text x="452" y="32" text-anchor="middle" fill="#4285f4" font-size="10" font-weight="700">☁️ GCP</text>
+                            <rect x="555" y="10" width="175" height="35" rx="6" fill="rgba(0,120,212,0.15)" stroke="#0078d4" stroke-width="1"/>
+                            <text x="642" y="32" text-anchor="middle" fill="#0078d4" font-size="10" font-weight="700">☁️ Azure</text>
+                            <!-- Row 1: Load Balancer -->
+                            <text x="90" y="75" text-anchor="middle" fill="#f0f4f8" font-size="9">Balanceador de Carga</text>
+                            <text x="262" y="75" text-anchor="middle" fill="#8ba4bc" font-size="9">ALB / NLB</text>
+                            <text x="452" y="75" text-anchor="middle" fill="#8ba4bc" font-size="9">Cloud Load Balancing</text>
+                            <text x="642" y="75" text-anchor="middle" fill="#8ba4bc" font-size="9">Azure Load Balancer</text>
+                            <line x1="20" y1="88" x2="730" y2="88" stroke="#1e3a5f" stroke-width="0.5"/>
+                            <!-- Row 2: CDN -->
+                            <text x="90" y="110" text-anchor="middle" fill="#f0f4f8" font-size="9">CDN</text>
+                            <text x="262" y="110" text-anchor="middle" fill="#8ba4bc" font-size="9">CloudFront</text>
+                            <text x="452" y="110" text-anchor="middle" fill="#8ba4bc" font-size="9">Cloud CDN</text>
+                            <text x="642" y="110" text-anchor="middle" fill="#8ba4bc" font-size="9">Azure CDN / Front Door</text>
+                            <line x1="20" y1="123" x2="730" y2="123" stroke="#1e3a5f" stroke-width="0.5"/>
+                            <!-- Row 3: Cache -->
+                            <text x="90" y="145" text-anchor="middle" fill="#f0f4f8" font-size="9">Caché</text>
+                            <text x="262" y="145" text-anchor="middle" fill="#8ba4bc" font-size="9">ElastiCache (Redis)</text>
+                            <text x="452" y="145" text-anchor="middle" fill="#8ba4bc" font-size="9">Memorystore</text>
+                            <text x="642" y="145" text-anchor="middle" fill="#8ba4bc" font-size="9">Azure Cache for Redis</text>
+                            <line x1="20" y1="158" x2="730" y2="158" stroke="#1e3a5f" stroke-width="0.5"/>
+                            <!-- Row 4: DB Relacional -->
+                            <text x="90" y="180" text-anchor="middle" fill="#f0f4f8" font-size="9">BD Relacional</text>
+                            <text x="262" y="180" text-anchor="middle" fill="#8ba4bc" font-size="9">RDS / Aurora</text>
+                            <text x="452" y="180" text-anchor="middle" fill="#8ba4bc" font-size="9">Cloud SQL / Spanner</text>
+                            <text x="642" y="180" text-anchor="middle" fill="#8ba4bc" font-size="9">Azure SQL / Cosmos DB</text>
+                            <line x1="20" y1="193" x2="730" y2="193" stroke="#1e3a5f" stroke-width="0.5"/>
+                            <!-- Row 5: NoSQL -->
+                            <text x="90" y="215" text-anchor="middle" fill="#f0f4f8" font-size="9">NoSQL</text>
+                            <text x="262" y="215" text-anchor="middle" fill="#8ba4bc" font-size="9">DynamoDB</text>
+                            <text x="452" y="215" text-anchor="middle" fill="#8ba4bc" font-size="9">Firestore / Bigtable</text>
+                            <text x="642" y="215" text-anchor="middle" fill="#8ba4bc" font-size="9">Cosmos DB</text>
+                            <line x1="20" y1="228" x2="730" y2="228" stroke="#1e3a5f" stroke-width="0.5"/>
+                            <!-- Row 6: Cola de Mensajes -->
+                            <text x="90" y="250" text-anchor="middle" fill="#f0f4f8" font-size="9">Cola de Mensajes</text>
+                            <text x="262" y="250" text-anchor="middle" fill="#8ba4bc" font-size="9">SQS / SNS / Kinesis</text>
+                            <text x="452" y="250" text-anchor="middle" fill="#8ba4bc" font-size="9">Pub/Sub</text>
+                            <text x="642" y="250" text-anchor="middle" fill="#8ba4bc" font-size="9">Service Bus / Event Hub</text>
+                            <line x1="20" y1="263" x2="730" y2="263" stroke="#1e3a5f" stroke-width="0.5"/>
+                            <!-- Row 7: Auto Scaling -->
+                            <text x="90" y="285" text-anchor="middle" fill="#f0f4f8" font-size="9">Auto Scaling</text>
+                            <text x="262" y="285" text-anchor="middle" fill="#8ba4bc" font-size="9">EC2 Auto Scaling</text>
+                            <text x="452" y="285" text-anchor="middle" fill="#8ba4bc" font-size="9">Managed Instance Groups</text>
+                            <text x="642" y="285" text-anchor="middle" fill="#8ba4bc" font-size="9">VM Scale Sets</text>
+                            <line x1="20" y1="298" x2="730" y2="298" stroke="#1e3a5f" stroke-width="0.5"/>
+                            <!-- Row 8: DNS -->
+                            <text x="90" y="320" text-anchor="middle" fill="#f0f4f8" font-size="9">DNS</text>
+                            <text x="262" y="320" text-anchor="middle" fill="#8ba4bc" font-size="9">Route 53</text>
+                            <text x="452" y="320" text-anchor="middle" fill="#8ba4bc" font-size="9">Cloud DNS</text>
+                            <text x="642" y="320" text-anchor="middle" fill="#8ba4bc" font-size="9">Azure DNS</text>
+                            <line x1="20" y1="333" x2="730" y2="333" stroke="#1e3a5f" stroke-width="0.5"/>
+                            <!-- Row 9: Monitoreo -->
+                            <text x="90" y="355" text-anchor="middle" fill="#f0f4f8" font-size="9">Monitoreo</text>
+                            <text x="262" y="355" text-anchor="middle" fill="#8ba4bc" font-size="9">CloudWatch / X-Ray</text>
+                            <text x="452" y="355" text-anchor="middle" fill="#8ba4bc" font-size="9">Cloud Monitoring</text>
+                            <text x="642" y="355" text-anchor="middle" fill="#8ba4bc" font-size="9">Azure Monitor</text>
+                            <line x1="20" y1="368" x2="730" y2="368" stroke="#1e3a5f" stroke-width="0.5"/>
+                            <!-- Row 10: Storage -->
+                            <text x="90" y="390" text-anchor="middle" fill="#f0f4f8" font-size="9">Almacenamiento Estático</text>
+                            <text x="262" y="390" text-anchor="middle" fill="#8ba4bc" font-size="9">S3</text>
+                            <text x="452" y="390" text-anchor="middle" fill="#8ba4bc" font-size="9">Cloud Storage</text>
+                            <text x="642" y="390" text-anchor="middle" fill="#8ba4bc" font-size="9">Blob Storage</text>
+                        </svg>
+                    </div>
+                    <p class="diagram-caption">Equivalencia de componentes de arquitectura con servicios administrados en los 3 principales proveedores cloud</p>
+                </div>
+
+                <h3>Mejores Prácticas por Componente</h3>
+
+                <!-- Load Balancer Best Practices -->
+                <div class="info-card">
+                    <h4>⚖️ Balanceador de Carga — Mejores Prácticas</h4>
+                    <p>
+                        • Usar balanceadores de capa 7 (Application) para enrutamiento basado en contenido (path, headers, host)<br>
+                        • Implementar health checks activos con intervalos cortos para detectar fallos rápidamente<br>
+                        • Habilitar connection draining para terminar conexiones existentes de forma elegante<br>
+                        • <strong>AWS:</strong> ALB con target groups + WAF integrado<br>
+                        • <strong>GCP:</strong> Global HTTP(S) Load Balancer con Cloud Armor<br>
+                        • <strong>Azure:</strong> Application Gateway con WAF v2
+                    </p>
+                </div>
+
+                <!-- Cache Best Practices -->
+                <div class="info-card orange">
+                    <h4>⚡ Caché — Mejores Prácticas</h4>
+                    <p>
+                        • Implementar patrón Cache-Aside (lazy loading) para la mayoría de casos de uso<br>
+                        • Usar TTL adaptativo: más corto para datos volátiles, más largo para datos estables<br>
+                        • Configurar cluster mode con réplicas de lectura para alta disponibilidad<br>
+                        • <strong>AWS:</strong> ElastiCache Redis con Multi-AZ y cifrado en tránsito<br>
+                        • <strong>GCP:</strong> Memorystore con failover automático entre zonas<br>
+                        • <strong>Azure:</strong> Azure Cache for Redis Premium con persistencia RDB/AOF
+                    </p>
+                </div>
+
+                <!-- Database Best Practices -->
+                <div class="info-card purple">
+                    <h4>🗄️ Base de Datos — Mejores Prácticas</h4>
+                    <p>
+                        • Usar read replicas para distribuir carga de lectura (ratio típico 80% lectura / 20% escritura)<br>
+                        • Implementar connection pooling para reducir overhead de conexiones<br>
+                        • Automatizar backups con point-in-time recovery<br>
+                        • <strong>AWS:</strong> Aurora con hasta 15 réplicas de lectura + Global Database para multi-región<br>
+                        • <strong>GCP:</strong> Cloud Spanner para escala global con consistencia fuerte<br>
+                        • <strong>Azure:</strong> Cosmos DB con distribución multi-región y 5 modelos de consistencia
+                    </p>
+                </div>
+
+                <h3>Patrones de Arquitectura Modernos</h3>
+
+                <div class="considerations-grid">
+                    <div class="consideration-card">
+                        <h5>🐳 Contenedores y Orquestación</h5>
+                        <p><strong>AWS:</strong> ECS/EKS • <strong>GCP:</strong> GKE • <strong>Azure:</strong> AKS — Usar Kubernetes para auto-scaling granular y despliegues blue-green.</p>
+                    </div>
+                    <div class="consideration-card">
+                        <h5>🔀 Service Mesh</h5>
+                        <p><strong>AWS:</strong> App Mesh • <strong>GCP:</strong> Anthos Service Mesh • <strong>Azure:</strong> Open Service Mesh — Observabilidad, mTLS y control de tráfico entre microservicios.</p>
+                    </div>
+                    <div class="consideration-card">
+                        <h5>⚡ Serverless</h5>
+                        <p><strong>AWS:</strong> Lambda + API Gateway • <strong>GCP:</strong> Cloud Functions + Cloud Run • <strong>Azure:</strong> Functions — Escala a cero, pago por uso, ideal para cargas variables.</p>
+                    </div>
+                    <div class="consideration-card">
+                        <h5>📊 Observabilidad Distribuida</h5>
+                        <p><strong>AWS:</strong> X-Ray + CloudWatch • <strong>GCP:</strong> Cloud Trace + Logging • <strong>Azure:</strong> Application Insights — Trazas distribuidas, métricas y alertas unificadas.</p>
+                    </div>
+                    <div class="consideration-card">
+                        <h5>🔐 Seguridad Zero Trust</h5>
+                        <p><strong>AWS:</strong> IAM + VPC + PrivateLink • <strong>GCP:</strong> BeyondCorp + VPC SC • <strong>Azure:</strong> Entra ID + Private Link — Nunca confiar, siempre verificar.</p>
+                    </div>
+                    <div class="consideration-card">
+                        <h5>🌍 Multi-Región Activo-Activo</h5>
+                        <p><strong>AWS:</strong> Global Accelerator + DynamoDB Global Tables • <strong>GCP:</strong> Spanner + Global LB • <strong>Azure:</strong> Traffic Manager + Cosmos DB — RPO cercano a cero.</p>
+                    </div>
+                </div>
+
+                <h3>Ejemplo de Arquitectura en AWS</h3>
+                <div class="diagram-container">
+                    <span class="diagram-label">Arquitectura de Referencia — AWS</span>
+                    <div class="svg-diagram">
+                        <svg viewBox="0 0 750 320" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Users -->
+                            <circle cx="60" cy="160" r="20" fill="rgba(255,153,0,0.15)" stroke="#ff9900" stroke-width="1.5"/>
+                            <text x="60" y="165" text-anchor="middle" fill="#f0f4f8" font-size="14">👥</text>
+                            <text x="60" y="195" text-anchor="middle" fill="#8ba4bc" font-size="8">Usuarios</text>
+                            <!-- Route 53 -->
+                            <rect x="120" y="30" width="90" height="35" rx="6" fill="rgba(255,153,0,0.1)" stroke="#ff9900" stroke-width="1"/>
+                            <text x="165" y="52" text-anchor="middle" fill="#ff9900" font-size="8" font-weight="600">Route 53</text>
+                            <!-- CloudFront -->
+                            <rect x="120" y="80" width="90" height="35" rx="6" fill="rgba(255,153,0,0.1)" stroke="#ff9900" stroke-width="1"/>
+                            <text x="165" y="102" text-anchor="middle" fill="#ff9900" font-size="8" font-weight="600">CloudFront</text>
+                            <!-- ALB -->
+                            <rect x="250" y="140" width="90" height="40" rx="8" fill="rgba(108,99,255,0.15)" stroke="#6c63ff" stroke-width="1.5"/>
+                            <text x="295" y="163" text-anchor="middle" fill="#6c63ff" font-size="9" font-weight="700">ALB</text>
+                            <!-- ECS/EKS -->
+                            <rect x="390" y="100" width="110" height="50" rx="8" fill="rgba(77,168,218,0.1)" stroke="#4da8da" stroke-width="1.5"/>
+                            <text x="445" y="122" text-anchor="middle" fill="#4da8da" font-size="9" font-weight="600">ECS / EKS</text>
+                            <text x="445" y="138" text-anchor="middle" fill="#8ba4bc" font-size="7">Auto Scaling</text>
+                            <!-- ElastiCache -->
+                            <rect x="390" y="170" width="110" height="40" rx="6" fill="rgba(108,99,255,0.1)" stroke="#6c63ff" stroke-width="1"/>
+                            <text x="445" y="194" text-anchor="middle" fill="#6c63ff" font-size="8" font-weight="600">ElastiCache Redis</text>
+                            <!-- Aurora -->
+                            <rect x="560" y="90" width="110" height="45" rx="6" fill="rgba(0,123,255,0.1)" stroke="#007bff" stroke-width="1.5"/>
+                            <text x="615" y="110" text-anchor="middle" fill="#007bff" font-size="8" font-weight="600">Aurora</text>
+                            <text x="615" y="125" text-anchor="middle" fill="#8ba4bc" font-size="7">Writer + Readers</text>
+                            <!-- DynamoDB -->
+                            <rect x="560" y="155" width="110" height="40" rx="6" fill="rgba(255,153,0,0.1)" stroke="#ff9900" stroke-width="1"/>
+                            <text x="615" y="179" text-anchor="middle" fill="#ff9900" font-size="8" font-weight="600">DynamoDB</text>
+                            <!-- SQS -->
+                            <rect x="560" y="215" width="110" height="40" rx="6" fill="rgba(32,201,151,0.1)" stroke="#20c997" stroke-width="1"/>
+                            <text x="615" y="239" text-anchor="middle" fill="#20c997" font-size="8" font-weight="600">SQS + Lambda</text>
+                            <!-- S3 -->
+                            <rect x="250" y="250" width="90" height="35" rx="6" fill="rgba(255,153,0,0.1)" stroke="#ff9900" stroke-width="1"/>
+                            <text x="295" y="272" text-anchor="middle" fill="#ff9900" font-size="8" font-weight="600">S3 (Estáticos)</text>
+                            <!-- CloudWatch -->
+                            <rect x="390" y="250" width="110" height="35" rx="6" fill="rgba(77,168,218,0.1)" stroke="#4da8da" stroke-width="1"/>
+                            <text x="445" y="272" text-anchor="middle" fill="#4da8da" font-size="8" font-weight="600">CloudWatch + X-Ray</text>
+                            <!-- Connections -->
+                            <line x1="85" y1="150" x2="120" y2="97" stroke="#ff9900" stroke-width="1" stroke-dasharray="4,2"/>
+                            <line x1="85" y1="160" x2="245" y2="160" stroke="#4da8da" stroke-width="1.5"/>
+                            <polygon points="245,155 255,160 245,165" fill="#4da8da"/>
+                            <line x1="345" y1="155" x2="385" y2="125" stroke="#4da8da" stroke-width="1"/>
+                            <line x1="345" y1="165" x2="385" y2="185" stroke="#6c63ff" stroke-width="1"/>
+                            <line x1="505" y1="115" x2="555" y2="110" stroke="#007bff" stroke-width="1"/>
+                            <line x1="505" y1="130" x2="555" y2="170" stroke="#ff9900" stroke-width="1"/>
+                            <line x1="505" y1="140" x2="555" y2="230" stroke="#20c997" stroke-width="1" stroke-dasharray="4,2"/>
+                            <line x1="165" y1="115" x2="250" y2="265" stroke="#ff9900" stroke-width="1" stroke-dasharray="3,2"/>
+                        </svg>
+                    </div>
+                    <p class="diagram-caption">Arquitectura de referencia en AWS: Route 53 → CloudFront → ALB → ECS → Aurora/DynamoDB + ElastiCache + SQS</p>
+                </div>
+
+                <h3>Recomendaciones Clave</h3>
+                <div class="advantages-list">
+                    <div class="advantage-item">
+                        <span class="check">✓</span>
+                        <p><strong>Infraestructura como Código:</strong> Usar Terraform, CloudFormation, Pulumi o Bicep para reproducibilidad y versionado</p>
+                    </div>
+                    <div class="advantage-item">
+                        <span class="check">✓</span>
+                        <p><strong>Diseño para Fallos:</strong> Asumir que todo puede fallar. Implementar circuit breakers, retries con backoff exponencial y timeouts</p>
+                    </div>
+                    <div class="advantage-item">
+                        <span class="check">✓</span>
+                        <p><strong>Principio de Menor Privilegio:</strong> Roles IAM específicos por servicio, nunca credenciales hardcodeadas</p>
+                    </div>
+                    <div class="advantage-item">
+                        <span class="check">✓</span>
+                        <p><strong>Cifrado en Todas Partes:</strong> En tránsito (TLS 1.3) y en reposo (KMS/CMEK). Sin excepciones</p>
+                    </div>
+                    <div class="advantage-item">
+                        <span class="check">✓</span>
+                        <p><strong>Costos desde el Día 1:</strong> Usar instancias reservadas/savings plans, auto-scaling agresivo y monitoreo de costos con alertas</p>
+                    </div>
+                    <div class="advantage-item">
+                        <span class="check">✓</span>
+                        <p><strong>Chaos Engineering:</strong> Probar resiliencia con AWS Fault Injection Simulator, Gremlin o Chaos Monkey</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Arquitecturas AWS con Terraform -->
+            <div class="content-block" id="aws-terraform">
+                <h2><span class="icon orange"><i class="fab fa-aws"></i></span> Arquitecturas AWS con Terraform</h2>
+                <p>
+                    A continuación se presentan las configuraciones de Terraform para implementar cada capa de la arquitectura 
+                    descrita en este ejemplo. Cada bloque es incremental — construimos desde la red base hasta la aplicación completa.
+                </p>
+
+                <h3>1. Red Base — VPC, Subnets y Security Groups</h3>
+                <div class="info-card">
+                    <h4>🌐 Fundamento de Red</h4>
+                    <p>Toda arquitectura escalable comienza con una VPC bien diseñada. Usamos subnets públicas para el balanceador 
+                    y subnets privadas para servidores y bases de datos. Esto garantiza que los componentes internos nunca sean 
+                    accesibles directamente desde internet.</p>
+                </div>
+                <div class="code-block">
+<span class="comment"># provider.tf — Configuración del proveedor AWS</span>
+terraform {
+  required_providers {
+    aws = {
+      source  = <span class="string">"hashicorp/aws"</span>
+      version = <span class="string">"~&gt; 5.0"</span>
+    }
+  }
+}
+
+provider <span class="string">"aws"</span> {
+  region = <span class="string">"us-east-1"</span>
+}
+</div>
+
+                <div class="code-block">
+<span class="comment"># vpc.tf — VPC con subnets públicas y privadas</span>
+resource <span class="string">"aws_vpc"</span> <span class="string">"main"</span> {
+  cidr_block           = <span class="string">"10.0.0.0/16"</span>
+  enable_dns_hostnames = true
+  enable_dns_support   = true
+  tags = { Name = <span class="string">"system-design-vpc"</span> }
+}
+
+resource <span class="string">"aws_subnet"</span> <span class="string">"public_a"</span> {
+  vpc_id            = aws_vpc.main.id
+  cidr_block        = <span class="string">"10.0.1.0/24"</span>
+  availability_zone = <span class="string">"us-east-1a"</span>
+  map_public_ip_on_launch = true
+  tags = { Name = <span class="string">"public-subnet-a"</span> }
+}
+
+resource <span class="string">"aws_subnet"</span> <span class="string">"public_b"</span> {
+  vpc_id            = aws_vpc.main.id
+  cidr_block        = <span class="string">"10.0.2.0/24"</span>
+  availability_zone = <span class="string">"us-east-1b"</span>
+  map_public_ip_on_launch = true
+  tags = { Name = <span class="string">"public-subnet-b"</span> }
+}
+
+resource <span class="string">"aws_subnet"</span> <span class="string">"private_a"</span> {
+  vpc_id            = aws_vpc.main.id
+  cidr_block        = <span class="string">"10.0.10.0/24"</span>
+  availability_zone = <span class="string">"us-east-1a"</span>
+  tags = { Name = <span class="string">"private-subnet-a"</span> }
+}
+
+resource <span class="string">"aws_subnet"</span> <span class="string">"private_b"</span> {
+  vpc_id            = aws_vpc.main.id
+  cidr_block        = <span class="string">"10.0.11.0/24"</span>
+  availability_zone = <span class="string">"us-east-1b"</span>
+  tags = { Name = <span class="string">"private-subnet-b"</span> }
+}
+</div>
+
+                <h3>2. Balanceador de Carga — Application Load Balancer</h3>
+                <div class="info-card">
+                    <h4>⚖️ ALB con Health Checks</h4>
+                    <p>El ALB distribuye tráfico entre múltiples instancias en diferentes zonas de disponibilidad. 
+                    Los health checks verifican que cada instancia responda correctamente antes de enviarle tráfico.</p>
+                </div>
+                <div class="code-block">
+<span class="comment"># alb.tf — Application Load Balancer</span>
+resource <span class="string">"aws_lb"</span> <span class="string">"app"</span> {
+  name               = <span class="string">"app-alb"</span>
+  internal           = false
+  load_balancer_type = <span class="string">"application"</span>
+  security_groups    = [aws_security_group.alb_sg.id]
+  subnets            = [aws_subnet.public_a.id, aws_subnet.public_b.id]
+
+  tags = { Name = <span class="string">"app-load-balancer"</span> }
+}
+
+resource <span class="string">"aws_lb_target_group"</span> <span class="string">"app"</span> {
+  name     = <span class="string">"app-tg"</span>
+  port     = 80
+  protocol = <span class="string">"HTTP"</span>
+  vpc_id   = aws_vpc.main.id
+
+  health_check {
+    path                = <span class="string">"/health"</span>
+    healthy_threshold   = 2
+    unhealthy_threshold = 3
+    timeout             = 5
+    interval            = 30
+  }
+}
+
+resource <span class="string">"aws_lb_listener"</span> <span class="string">"http"</span> {
+  load_balancer_arn = aws_lb.app.arn
+  port              = 80
+  protocol          = <span class="string">"HTTP"</span>
+
+  default_action {
+    type             = <span class="string">"forward"</span>
+    target_group_arn = aws_lb_target_group.app.arn
+  }
+}
+</div>
+
+                <h3>3. Auto Scaling — Servidores Web Stateless</h3>
+                <div class="info-card">
+                    <h4>📈 Escalamiento Automático</h4>
+                    <p>El Auto Scaling Group mantiene entre 2 y 10 instancias según la carga de CPU. 
+                    Las instancias son stateless — toda la sesión se almacena en ElastiCache Redis.</p>
+                </div>
+                <div class="code-block">
+<span class="comment"># asg.tf — Auto Scaling Group con Launch Template</span>
+resource <span class="string">"aws_launch_template"</span> <span class="string">"app"</span> {
+  name_prefix   = <span class="string">"app-server-"</span>
+  image_id      = <span class="string">"ami-0c02fb55956c7d316"</span>  <span class="comment"># Amazon Linux 2023</span>
+  instance_type = <span class="string">"t3.medium"</span>
+
+  network_interfaces {
+    security_groups             = [aws_security_group.app_sg.id]
+    associate_public_ip_address = false
+  }
+
+  user_data = base64encode(&lt;&lt;-EOF
+    #!/bin/bash
+    yum update -y
+    yum install -y docker
+    systemctl start docker
+    docker pull myapp:latest
+    docker run -d -p 80:8080 myapp:latest
+  EOF
+  )
+
+  tag_specifications {
+    resource_type = <span class="string">"instance"</span>
+    tags = { Name = <span class="string">"app-server"</span> }
+  }
+}
+
+resource <span class="string">"aws_autoscaling_group"</span> <span class="string">"app"</span> {
+  name                = <span class="string">"app-asg"</span>
+  desired_capacity    = 2
+  min_size            = 2
+  max_size            = 10
+  target_group_arns   = [aws_lb_target_group.app.arn]
+  vpc_zone_identifier = [aws_subnet.private_a.id, aws_subnet.private_b.id]
+
+  launch_template {
+    id      = aws_launch_template.app.id
+    version = <span class="string">"$Latest"</span>
+  }
+}
+
+<span class="comment"># Política de escalamiento por CPU</span>
+resource <span class="string">"aws_autoscaling_policy"</span> <span class="string">"cpu"</span> {
+  name                   = <span class="string">"cpu-target-tracking"</span>
+  autoscaling_group_name = aws_autoscaling_group.app.name
+  policy_type            = <span class="string">"TargetTrackingScaling"</span>
+
+  target_tracking_configuration {
+    predefined_metric_specification {
+      predefined_metric_type = <span class="string">"ASGAverageCPUUtilization"</span>
+    }
+    target_value = 60.0
+  }
+}
+</div>
+
+                <h3>4. Base de Datos — Aurora con Réplicas de Lectura</h3>
+                <div class="info-card purple">
+                    <h4>🗄️ Aurora MySQL Multi-AZ</h4>
+                    <p>Aurora proporciona replicación automática con hasta 15 réplicas de lectura, failover automático 
+                    en menos de 30 segundos y almacenamiento que escala automáticamente hasta 128 TB.</p>
+                </div>
+                <div class="code-block">
+<span class="comment"># aurora.tf — Cluster Aurora con réplicas de lectura</span>
+resource <span class="string">"aws_rds_cluster"</span> <span class="string">"main"</span> {
+  cluster_identifier = <span class="string">"app-aurora-cluster"</span>
+  engine             = <span class="string">"aurora-mysql"</span>
+  engine_version     = <span class="string">"8.0.mysql_aurora.3.04.0"</span>
+  database_name      = <span class="string">"appdb"</span>
+  master_username    = <span class="string">"admin"</span>
+  master_password    = var.db_password  <span class="comment"># Usar AWS Secrets Manager</span>
+
+  vpc_security_group_ids = [aws_security_group.db_sg.id]
+  db_subnet_group_name   = aws_db_subnet_group.main.name
+
+  backup_retention_period = 7
+  preferred_backup_window = <span class="string">"03:00-04:00"</span>
+  skip_final_snapshot     = false
+}
+
+<span class="comment"># Instancia Writer (Master)</span>
+resource <span class="string">"aws_rds_cluster_instance"</span> <span class="string">"writer"</span> {
+  identifier         = <span class="string">"app-aurora-writer"</span>
+  cluster_identifier = aws_rds_cluster.main.id
+  instance_class     = <span class="string">"db.r6g.large"</span>
+  engine             = aws_rds_cluster.main.engine
+}
+
+<span class="comment"># Instancias Reader (Slaves) — 2 réplicas</span>
+resource <span class="string">"aws_rds_cluster_instance"</span> <span class="string">"readers"</span> {
+  count              = 2
+  identifier         = <span class="string">"app-aurora-reader-${count.index}"</span>
+  cluster_identifier = aws_rds_cluster.main.id
+  instance_class     = <span class="string">"db.r6g.large"</span>
+  engine             = aws_rds_cluster.main.engine
+}
+</div>
+
+                <h3>5. Caché — ElastiCache Redis Cluster</h3>
+                <div class="code-block">
+<span class="comment"># elasticache.tf — Redis con réplicas Multi-AZ</span>
+resource <span class="string">"aws_elasticache_replication_group"</span> <span class="string">"redis"</span> {
+  replication_group_id = <span class="string">"app-redis"</span>
+  description          = <span class="string">"Redis cache para sesiones y datos frecuentes"</span>
+  node_type            = <span class="string">"cache.r6g.large"</span>
+  num_cache_clusters   = 3  <span class="comment"># 1 primario + 2 réplicas</span>
+  engine_version       = <span class="string">"7.0"</span>
+  port                 = 6379
+
+  automatic_failover_enabled = true
+  multi_az_enabled           = true
+  at_rest_encryption_enabled = true
+  transit_encryption_enabled = true
+
+  subnet_group_name  = aws_elasticache_subnet_group.main.name
+  security_group_ids = [aws_security_group.redis_sg.id]
+}
+</div>
+
+                <h3>6. CDN y Almacenamiento Estático — CloudFront + S3</h3>
+                <div class="code-block">
+<span class="comment"># cdn.tf — CloudFront + S3 para assets estáticos</span>
+resource <span class="string">"aws_s3_bucket"</span> <span class="string">"static"</span> {
+  bucket = <span class="string">"app-static-assets-${random_id.suffix.hex}"</span>
+  tags   = { Name = <span class="string">"static-assets"</span> }
+}
+
+resource <span class="string">"aws_s3_bucket_versioning"</span> <span class="string">"static"</span> {
+  bucket = aws_s3_bucket.static.id
+  versioning_configuration { status = <span class="string">"Enabled"</span> }
+}
+
+resource <span class="string">"aws_cloudfront_distribution"</span> <span class="string">"cdn"</span> {
+  origin {
+    domain_name = aws_s3_bucket.static.bucket_regional_domain_name
+    origin_id   = <span class="string">"s3-static"</span>
+    s3_origin_config {
+      origin_access_identity = aws_cloudfront_origin_access_identity.oai.cloudfront_access_identity_path
+    }
+  }
+
+  enabled             = true
+  default_root_object = <span class="string">"index.html"</span>
+
+  default_cache_behavior {
+    allowed_methods  = [<span class="string">"GET"</span>, <span class="string">"HEAD"</span>]
+    cached_methods   = [<span class="string">"GET"</span>, <span class="string">"HEAD"</span>]
+    target_origin_id = <span class="string">"s3-static"</span>
+    viewer_protocol_policy = <span class="string">"redirect-to-https"</span>
+
+    forwarded_values {
+      query_string = false
+      cookies { forward = <span class="string">"none"</span> }
+    }
+
+    min_ttl     = 0
+    default_ttl = 86400   <span class="comment"># 24 horas</span>
+    max_ttl     = 604800  <span class="comment"># 7 días</span>
+  }
+
+  restrictions {
+    geo_restriction { restriction_type = <span class="string">"none"</span> }
+  }
+
+  viewer_certificate {
+    cloudfront_default_certificate = true
+  }
+}
+</div>
+
+                <h3>7. Cola de Mensajes — SQS + Lambda Workers</h3>
+                <div class="code-block">
+<span class="comment"># sqs.tf — Cola SQS con Dead Letter Queue</span>
+resource <span class="string">"aws_sqs_queue"</span> <span class="string">"tasks"</span> {
+  name                       = <span class="string">"app-task-queue"</span>
+  visibility_timeout_seconds = 300
+  message_retention_seconds  = 1209600  <span class="comment"># 14 días</span>
+  receive_wait_time_seconds  = 20       <span class="comment"># Long polling</span>
+
+  redrive_policy = jsonencode({
+    deadLetterTargetArn = aws_sqs_queue.dlq.arn
+    maxReceiveCount     = 3
+  })
+}
+
+resource <span class="string">"aws_sqs_queue"</span> <span class="string">"dlq"</span> {
+  name = <span class="string">"app-task-queue-dlq"</span>
+}
+
+<span class="comment"># Lambda como worker/consumer</span>
+resource <span class="string">"aws_lambda_function"</span> <span class="string">"worker"</span> {
+  function_name = <span class="string">"task-worker"</span>
+  runtime       = <span class="string">"python3.12"</span>
+  handler       = <span class="string">"handler.process"</span>
+  filename      = <span class="string">"worker.zip"</span>
+  role          = aws_iam_role.lambda_role.arn
+  timeout       = 300
+  memory_size   = 512
+}
+
+resource <span class="string">"aws_lambda_event_source_mapping"</span> <span class="string">"sqs_trigger"</span> {
+  event_source_arn = aws_sqs_queue.tasks.arn
+  function_name    = aws_lambda_function.worker.arn
+  batch_size       = 10
+}
+</div>
+
+                <div class="info-card">
+                    <h4>📋 Comandos para Desplegar</h4>
+                    <p>
+                        <code>terraform init</code> → Inicializar proveedores<br>
+                        <code>terraform plan</code> → Revisar cambios antes de aplicar<br>
+                        <code>terraform apply -auto-approve</code> → Crear la infraestructura<br>
+                        <code>terraform destroy</code> → Eliminar todo (¡cuidado en producción!)
+                    </p>
+                </div>
+            </div>
+
+            <!-- Docker en Local -->
+            <div class="content-block" id="docker-local">
+                <h2><span class="icon purple"><i class="fab fa-docker"></i></span> Ejemplo Completo con Docker en Local</h2>
+                <p>
+                    Puedes replicar toda la arquitectura de este ejemplo en tu máquina local usando Docker Compose. 
+                    Esto incluye: servidor web con Nginx como balanceador, aplicación en Node.js, base de datos PostgreSQL 
+                    con réplica de lectura, Redis como caché y RabbitMQ como cola de mensajes.
+                </p>
+
+                <div class="diagram-container">
+                    <span class="diagram-label">Arquitectura Docker Local</span>
+                    <div class="svg-diagram">
+                        <svg viewBox="0 0 750 300" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Docker network box -->
+                            <rect x="30" y="20" width="690" height="260" rx="14" fill="rgba(77,168,218,0.05)" stroke="#4da8da" stroke-width="1" stroke-dasharray="6,3"/>
+                            <text x="375" y="45" text-anchor="middle" fill="#4da8da" font-size="10" font-weight="600">🐳 Docker Network: app-network</text>
+                            <!-- Nginx LB -->
+                            <rect x="60" y="120" width="90" height="55" rx="8" fill="rgba(32,201,151,0.15)" stroke="#20c997" stroke-width="1.5"/>
+                            <text x="105" y="145" text-anchor="middle" fill="#20c997" font-size="9" font-weight="700">Nginx</text>
+                            <text x="105" y="162" text-anchor="middle" fill="#8ba4bc" font-size="7">:80 → apps</text>
+                            <!-- App 1 -->
+                            <rect x="200" y="80" width="100" height="45" rx="6" fill="rgba(77,168,218,0.1)" stroke="#4da8da" stroke-width="1"/>
+                            <text x="250" y="102" text-anchor="middle" fill="#4da8da" font-size="8" font-weight="600">App Node.js 1</text>
+                            <text x="250" y="116" text-anchor="middle" fill="#8ba4bc" font-size="7">:3001</text>
+                            <!-- App 2 -->
+                            <rect x="200" y="145" width="100" height="45" rx="6" fill="rgba(77,168,218,0.1)" stroke="#4da8da" stroke-width="1"/>
+                            <text x="250" y="167" text-anchor="middle" fill="#4da8da" font-size="8" font-weight="600">App Node.js 2</text>
+                            <text x="250" y="181" text-anchor="middle" fill="#8ba4bc" font-size="7">:3002</text>
+                            <!-- Redis -->
+                            <rect x="360" y="70" width="90" height="45" rx="6" fill="rgba(108,99,255,0.1)" stroke="#6c63ff" stroke-width="1"/>
+                            <text x="405" y="92" text-anchor="middle" fill="#6c63ff" font-size="8" font-weight="600">Redis</text>
+                            <text x="405" y="106" text-anchor="middle" fill="#8ba4bc" font-size="7">:6379 (Caché)</text>
+                            <!-- PostgreSQL Master -->
+                            <rect x="500" y="70" width="100" height="45" rx="6" fill="rgba(0,123,255,0.1)" stroke="#007bff" stroke-width="1.5"/>
+                            <text x="550" y="90" text-anchor="middle" fill="#007bff" font-size="8" font-weight="600">PostgreSQL</text>
+                            <text x="550" y="106" text-anchor="middle" fill="#8ba4bc" font-size="7">:5432 (Master)</text>
+                            <!-- PostgreSQL Replica -->
+                            <rect x="500" y="135" width="100" height="45" rx="6" fill="rgba(0,123,255,0.08)" stroke="#007bff" stroke-width="1"/>
+                            <text x="550" y="155" text-anchor="middle" fill="#007bff" font-size="8" font-weight="600">PG Réplica</text>
+                            <text x="550" y="171" text-anchor="middle" fill="#8ba4bc" font-size="7">:5433 (Read)</text>
+                            <!-- RabbitMQ -->
+                            <rect x="360" y="155" width="90" height="45" rx="6" fill="rgba(255,153,0,0.1)" stroke="#ff9900" stroke-width="1"/>
+                            <text x="405" y="177" text-anchor="middle" fill="#ff9900" font-size="8" font-weight="600">RabbitMQ</text>
+                            <text x="405" y="191" text-anchor="middle" fill="#8ba4bc" font-size="7">:5672 (Cola)</text>
+                            <!-- Worker -->
+                            <rect x="360" y="220" width="90" height="40" rx="6" fill="rgba(32,201,151,0.1)" stroke="#20c997" stroke-width="1"/>
+                            <text x="405" y="244" text-anchor="middle" fill="#20c997" font-size="8" font-weight="600">Worker</text>
+                            <!-- Connections -->
+                            <line x1="155" y1="140" x2="195" y2="102" stroke="#20c997" stroke-width="1"/>
+                            <line x1="155" y1="150" x2="195" y2="167" stroke="#20c997" stroke-width="1"/>
+                            <line x1="305" y1="95" x2="355" y2="90" stroke="#6c63ff" stroke-width="1" stroke-dasharray="3,2"/>
+                            <line x1="305" y1="100" x2="495" y2="90" stroke="#007bff" stroke-width="1" stroke-dasharray="3,2"/>
+                            <line x1="305" y1="170" x2="355" y2="175" stroke="#ff9900" stroke-width="1" stroke-dasharray="3,2"/>
+                            <line x1="405" y1="200" x2="405" y2="218" stroke="#20c997" stroke-width="1"/>
+                            <line x1="550" y1="115" x2="550" y2="132" stroke="#007bff" stroke-width="1" stroke-dasharray="3,2"/>
+                        </svg>
+                    </div>
+                    <p class="diagram-caption">Todos los servicios corren en contenedores Docker conectados por una red interna</p>
+                </div>
+
+                <h3>Estructura del Proyecto</h3>
+                <div class="code-block">
+<span class="comment"># Estructura de carpetas</span>
+system-design-docker/
+├── docker-compose.yml        <span class="comment"># Orquestación de todos los servicios</span>
+├── nginx/
+│   └── nginx.conf            <span class="comment"># Configuración del balanceador</span>
+├── app/
+│   ├── Dockerfile            <span class="comment"># Imagen de la aplicación</span>
+│   ├── package.json
+│   ├── server.js             <span class="comment"># Servidor Express</span>
+│   └── worker.js             <span class="comment"># Consumer de la cola</span>
+├── db/
+│   └── init.sql              <span class="comment"># Schema inicial</span>
+└── .env                      <span class="comment"># Variables de entorno</span>
+</div>
+
+                <h3>docker-compose.yml — Orquestación Completa</h3>
+                <div class="code-block">
+<span class="comment"># docker-compose.yml</span>
+version: <span class="string">"3.9"</span>
+
+services:
+  <span class="comment"># === BALANCEADOR DE CARGA ===</span>
+  nginx:
+    image: nginx:alpine
+    ports:
+      - <span class="string">"80:80"</span>
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - app1
+      - app2
+    networks:
+      - app-network
+
+  <span class="comment"># === SERVIDORES DE APLICACIÓN (Stateless) ===</span>
+  app1:
+    build: ./app
+    environment:
+      - NODE_ENV=production
+      - REDIS_URL=redis://redis:6379
+      - DB_WRITE_HOST=postgres-master
+      - DB_READ_HOST=postgres-replica
+      - DB_NAME=appdb
+      - RABBITMQ_URL=amqp://rabbitmq:5672
+    depends_on:
+      - redis
+      - postgres-master
+      - rabbitmq
+    networks:
+      - app-network
+
+  app2:
+    build: ./app
+    environment:
+      - NODE_ENV=production
+      - REDIS_URL=redis://redis:6379
+      - DB_WRITE_HOST=postgres-master
+      - DB_READ_HOST=postgres-replica
+      - DB_NAME=appdb
+      - RABBITMQ_URL=amqp://rabbitmq:5672
+    depends_on:
+      - redis
+      - postgres-master
+      - rabbitmq
+    networks:
+      - app-network
+</div>
+
+                <div class="code-block">
+  <span class="comment"># === CACHÉ (Redis) ===</span>
+  redis:
+    image: redis:7-alpine
+    command: redis-server --maxmemory 256mb --maxmemory-policy allkeys-lru
+    ports:
+      - <span class="string">"6379:6379"</span>
+    volumes:
+      - redis-data:/data
+    networks:
+      - app-network
+
+  <span class="comment"># === BASE DE DATOS MASTER (Escrituras) ===</span>
+  postgres-master:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: appdb
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-secretpass}
+    ports:
+      - <span class="string">"5432:5432"</span>
+    volumes:
+      - pg-master-data:/var/lib/postgresql/data
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+    command: |
+      postgres
+        -c wal_level=replica
+        -c max_wal_senders=3
+        -c max_replication_slots=3
+    networks:
+      - app-network
+
+  <span class="comment"># === BASE DE DATOS RÉPLICA (Lecturas) ===</span>
+  postgres-replica:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: appdb
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-secretpass}
+      PGUSER: admin
+    ports:
+      - <span class="string">"5433:5432"</span>
+    depends_on:
+      - postgres-master
+    volumes:
+      - pg-replica-data:/var/lib/postgresql/data
+    networks:
+      - app-network
+
+  <span class="comment"># === COLA DE MENSAJES (RabbitMQ) ===</span>
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    ports:
+      - <span class="string">"5672:5672"</span>
+      - <span class="string">"15672:15672"</span>   <span class="comment"># Panel de administración</span>
+    environment:
+      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_PASS: ${RABBIT_PASSWORD:-rabbitpass}
+    volumes:
+      - rabbitmq-data:/var/lib/rabbitmq
+    networks:
+      - app-network
+
+  <span class="comment"># === WORKER (Consumer de la cola) ===</span>
+  worker:
+    build:
+      context: ./app
+      dockerfile: Dockerfile
+    command: node worker.js
+    environment:
+      - REDIS_URL=redis://redis:6379
+      - DB_WRITE_HOST=postgres-master
+      - RABBITMQ_URL=amqp://rabbitmq:5672
+    depends_on:
+      - rabbitmq
+      - postgres-master
+    networks:
+      - app-network
+
+volumes:
+  redis-data:
+  pg-master-data:
+  pg-replica-data:
+  rabbitmq-data:
+
+networks:
+  app-network:
+    driver: bridge
+</div>
+
+                <h3>nginx.conf — Balanceador de Carga</h3>
+                <div class="code-block">
+<span class="comment"># nginx/nginx.conf</span>
+events {
+    worker_connections 1024;
+}
+
+http {
+    <span class="comment"># Upstream: grupo de servidores de aplicación</span>
+    upstream app_servers {
+        least_conn;  <span class="comment"># Enviar al servidor con menos conexiones</span>
+        server app1:3000;
+        server app2:3000;
+    }
+
+    server {
+        listen 80;
+
+        <span class="comment"># Health check endpoint</span>
+        location /health {
+            access_log off;
+            return 200 <span class="string">"OK"</span>;
+        }
+
+        <span class="comment"># Proxy a los servidores de aplicación</span>
+        location / {
+            proxy_pass http://app_servers;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_connect_timeout 5s;
+            proxy_read_timeout 30s;
+        }
+
+        <span class="comment"># Assets estáticos servidos directamente</span>
+        location /static/ {
+            alias /usr/share/nginx/html/static/;
+            expires 7d;
+            add_header Cache-Control <span class="string">"public, immutable"</span>;
+        }
+    }
+}
+</div>
+
+                <h3>Dockerfile — Aplicación Node.js</h3>
+                <div class="code-block">
+<span class="comment"># app/Dockerfile</span>
+FROM node:20-alpine
+
+WORKDIR /app
+
+<span class="comment"># Instalar dependencias primero (cache de capas Docker)</span>
+COPY package*.json ./
+RUN npm ci --only=production
+
+<span class="comment"># Copiar código fuente</span>
+COPY . .
+
+EXPOSE 3000
+
+<span class="comment"># Health check integrado</span>
+HEALTHCHECK --interval=30s --timeout=3s \
+  CMD wget --quiet --tries=1 --spider http://localhost:3000/health || exit 1
+
+CMD [<span class="string">"node"</span>, <span class="string">"server.js"</span>]
+</div>
+
+                <h3>server.js — Aplicación con Caché y Replicación</h3>
+                <div class="code-block">
+<span class="comment">// app/server.js</span>
+<span class="keyword">const</span> express = require(<span class="string">'express'</span>);
+<span class="keyword">const</span> Redis = require(<span class="string">'ioredis'</span>);
+<span class="keyword">const</span> { Pool } = require(<span class="string">'pg'</span>);
+<span class="keyword">const</span> amqp = require(<span class="string">'amqplib'</span>);
+
+<span class="keyword">const</span> app = express();
+app.use(express.json());
+
+<span class="comment">// Conexión a Redis (Caché + Sesiones)</span>
+<span class="keyword">const</span> redis = new Redis(process.env.REDIS_URL);
+
+<span class="comment">// Pool de conexiones — Master para escrituras</span>
+<span class="keyword">const</span> writePool = new Pool({
+  host: process.env.DB_WRITE_HOST,
+  database: process.env.DB_NAME,
+  user: <span class="string">'admin'</span>, password: process.env.DB_PASSWORD,
+  max: 20
+});
+
+<span class="comment">// Pool de conexiones — Réplica para lecturas</span>
+<span class="keyword">const</span> readPool = new Pool({
+  host: process.env.DB_READ_HOST,
+  database: process.env.DB_NAME,
+  user: <span class="string">'admin'</span>, password: process.env.DB_PASSWORD,
+  max: 20
+});
+
+<span class="comment">// GET /users/:id — Read-through cache</span>
+app.get(<span class="string">'/users/:id'</span>, async (req, res) =&gt; {
+  <span class="keyword">const</span> { id } = req.params;
+  <span class="comment">// 1. Verificar caché</span>
+  <span class="keyword">const</span> cached = await redis.get(`user:${id}`);
+  <span class="keyword">if</span> (cached) <span class="keyword">return</span> res.json(JSON.parse(cached));
+
+  <span class="comment">// 2. Cache miss → leer de réplica</span>
+  <span class="keyword">const</span> { rows } = await readPool.query(
+    <span class="string">'SELECT * FROM users WHERE id = $1'</span>, [id]
+  );
+  <span class="keyword">if</span> (rows.length === 0) <span class="keyword">return</span> res.status(404).json({ error: <span class="string">'No encontrado'</span> });
+
+  <span class="comment">// 3. Guardar en caché (TTL: 5 minutos)</span>
+  await redis.setex(`user:${id}`, 300, JSON.stringify(rows[0]));
+  res.json(rows[0]);
+});
+
+<span class="comment">// POST /users — Escribir en master + invalidar caché</span>
+app.post(<span class="string">'/users'</span>, async (req, res) =&gt; {
+  <span class="keyword">const</span> { name, email } = req.body;
+  <span class="keyword">const</span> { rows } = await writePool.query(
+    <span class="string">'INSERT INTO users (name, email) VALUES ($1, $2) RETURNING *'</span>,
+    [name, email]
+  );
+  <span class="comment">// Publicar tarea asíncrona en la cola</span>
+  <span class="keyword">const</span> channel = await getChannel();
+  channel.sendToQueue(<span class="string">'tasks'</span>, Buffer.from(JSON.stringify({
+    type: <span class="string">'welcome_email'</span>, userId: rows[0].id
+  })));
+  res.status(201).json(rows[0]);
+});
+
+app.get(<span class="string">'/health'</span>, (req, res) =&gt; res.json({ status: <span class="string">'ok'</span> }));
+app.listen(3000, () =&gt; console.log(<span class="string">'Servidor en puerto 3000'</span>));
+</div>
+
+                <h3>worker.js — Consumer de la Cola</h3>
+                <div class="code-block">
+<span class="comment">// app/worker.js — Procesa tareas de la cola</span>
+<span class="keyword">const</span> amqp = require(<span class="string">'amqplib'</span>);
+
+async <span class="keyword">function</span> startWorker() {
+  <span class="keyword">const</span> conn = await amqp.connect(process.env.RABBITMQ_URL);
+  <span class="keyword">const</span> channel = await conn.createChannel();
+
+  await channel.assertQueue(<span class="string">'tasks'</span>, { durable: true });
+  channel.prefetch(5); <span class="comment">// Procesar 5 mensajes a la vez</span>
+
+  console.log(<span class="string">'Worker esperando tareas...'</span>);
+
+  channel.consume(<span class="string">'tasks'</span>, async (msg) =&gt; {
+    <span class="keyword">const</span> task = JSON.parse(msg.content.toString());
+    console.log(`Procesando: ${task.type} para usuario ${task.userId}`);
+
+    try {
+      <span class="keyword">switch</span> (task.type) {
+        <span class="keyword">case</span> <span class="string">'welcome_email'</span>:
+          await sendWelcomeEmail(task.userId);
+          <span class="keyword">break</span>;
+        <span class="keyword">case</span> <span class="string">'process_image'</span>:
+          await processImage(task.imageUrl);
+          <span class="keyword">break</span>;
+      }
+      channel.ack(msg); <span class="comment">// Confirmar procesamiento exitoso</span>
+    } <span class="keyword">catch</span> (error) {
+      console.error(<span class="string">'Error:'</span>, error);
+      channel.nack(msg, false, true); <span class="comment">// Reintentar</span>
+    }
+  });
+}
+
+startWorker();
+</div>
+
+                <h3>Comandos para Ejecutar</h3>
+                <div class="flow-steps">
+                    <div class="flow-step">
+                        <div class="flow-step-number">1</div>
+                        <div class="flow-step-content">
+                            <p><strong>Levantar todo:</strong> <code>docker compose up -d --build</code> — Construye imágenes y levanta todos los servicios en segundo plano.</p>
+                        </div>
+                    </div>
+                    <div class="flow-step">
+                        <div class="flow-step-number">2</div>
+                        <div class="flow-step-content">
+                            <p><strong>Ver logs:</strong> <code>docker compose logs -f app1 app2 worker</code> — Monitorear la aplicación y el worker en tiempo real.</p>
+                        </div>
+                    </div>
+                    <div class="flow-step">
+                        <div class="flow-step-number">3</div>
+                        <div class="flow-step-content">
+                            <p><strong>Probar balanceo:</strong> <code>for i in $(seq 1 10); do curl http://localhost/health; done</code> — Verás respuestas alternando entre app1 y app2.</p>
+                        </div>
+                    </div>
+                    <div class="flow-step">
+                        <div class="flow-step-number">4</div>
+                        <div class="flow-step-content">
+                            <p><strong>Escalar:</strong> <code>docker compose up -d --scale app1=3</code> — Agregar más instancias de la app dinámicamente.</p>
+                        </div>
+                    </div>
+                    <div class="flow-step">
+                        <div class="flow-step-number">5</div>
+                        <div class="flow-step-content">
+                            <p><strong>Panel RabbitMQ:</strong> Abrir <code>http://localhost:15672</code> (admin/rabbitpass) para ver la cola de mensajes visualmente.</p>
+                        </div>
+                    </div>
+                    <div class="flow-step">
+                        <div class="flow-step-number">6</div>
+                        <div class="flow-step-content">
+                            <p><strong>Detener todo:</strong> <code>docker compose down -v</code> — Detiene contenedores y elimina volúmenes.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <h4>💡 ¿Qué demuestra este ejemplo?</h4>
+                    <p>
+                        Este docker-compose replica localmente todos los conceptos del capítulo:<br>
+                        • <strong>Balanceador de carga:</strong> Nginx con upstream round-robin<br>
+                        • <strong>Servidores stateless:</strong> 2+ instancias de la app sin estado local<br>
+                        • <strong>Caché read-through:</strong> Redis con TTL de 5 minutos<br>
+                        • <strong>Replicación de BD:</strong> PostgreSQL master (escrituras) + réplica (lecturas)<br>
+                        • <strong>Cola de mensajes:</strong> RabbitMQ con worker consumer independiente<br>
+                        • <strong>Escalamiento horizontal:</strong> <code>docker compose --scale</code> para agregar instancias
+                    </p>
+                </div>
+            </div>
+
+
+            <!-- Summary Section -->
+            <div class="summary-section">
+                <h2>🏆 Resumen — Millones de Usuarios y Más Allá</h2>
+                <div class="summary-grid">
+                    <div class="summary-item"><span class="bullet"></span> Mantener la capa web sin estado</div>
+                    <div class="summary-item"><span class="bullet"></span> Construir redundancia en cada capa</div>
+                    <div class="summary-item"><span class="bullet"></span> Cachear datos tanto como sea posible</div>
+                    <div class="summary-item"><span class="bullet"></span> Soportar múltiples centros de datos</div>
+                    <div class="summary-item"><span class="bullet"></span> Alojar assets estáticos en CDN</div>
+                    <div class="summary-item"><span class="bullet"></span> Escalar la capa de datos con sharding</div>
+                    <div class="summary-item"><span class="bullet"></span> Separar capas en servicios individuales</div>
+                    <div class="summary-item"><span class="bullet"></span> Monitorear el sistema y usar automatización</div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Pie de página -->
+    <footer class="footer">
+        <p>Diseño de Sistemas — Basado en "System Design Interview" de Alex Xu</p>
+        <p>Creado por <a href="https://github.com/mtroangelsanchez">José Ángel Sánchez Pérez</a></p>
+    </footer>
+
+    <!-- Navegación lateral -->
+    <div class="toc">
+        <a href="#single-server" class="toc-dot active" title="Servidor Único"></a>
+        <a href="#database" class="toc-dot" title="Base de Datos"></a>
+        <a href="#load-balancer" class="toc-dot" title="Balanceador"></a>
+        <a href="#cache" class="toc-dot" title="Caché"></a>
+        <a href="#cdn" class="toc-dot" title="CDN"></a>
+        <a href="#stateless" class="toc-dot" title="Sin Estado"></a>
+        <a href="#data-centers" class="toc-dot" title="Centros de Datos"></a>
+        <a href="#message-queue" class="toc-dot" title="Cola de Mensajes"></a>
+        <a href="#scaling" class="toc-dot" title="Sharding"></a>
+        <a href="#cloud-practices" class="toc-dot" title="Prácticas Cloud"></a>
+        <a href="#aws-terraform" class="toc-dot" title="AWS + Terraform"></a>
+        <a href="#docker-local" class="toc-dot" title="Docker Local"></a>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
