@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AWS Solutions Architect Associate - Guía de Estudio</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#hero" class="nav-logo">
+                <span class="logo-icon">☁️</span>
+                <span class="logo-text">AWS <span class="gold">SAA-C03</span></span>
+            </a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#dominios" class="nav-link">Dominios</a></li>
+                <li><a href="#cronograma" class="nav-link">Cronograma</a></li>
+                <li><a href="#quiz" class="nav-link">Quiz</a></li>
+                <li><a href="#recursos" class="nav-link">Recursos</a></li>
+                <li><a href="#progreso" class="nav-link">Progreso</a></li>
+            </ul>
+            <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <span class="hero-badge">Certificación AWS 2025</span>
+            <h1 class="hero-title">Solutions Architect<br><span class="gold">Associate</span></h1>
+            <p class="hero-subtitle">Guía completa de estudio para el examen SAA-C03. Domina los cuatro pilares de la arquitectura en la nube de AWS.</p>
+            <div class="hero-stats">
+                <div class="stat">
+                    <span class="stat-number">4</span>
+                    <span class="stat-label">Dominios</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">65</span>
+                    <span class="stat-label">Preguntas</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">130</span>
+                    <span class="stat-label">Minutos</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">720</span>
+                    <span class="stat-label">Puntaje Mín.</span>
+                </div>
+            </div>
+            <a href="#dominios" class="hero-cta">
+                <span class="play-icon">▶</span>
+                Comenzar Estudio
+            </a>
+        </div>
+    </section>
+
+    <!-- Domains Section -->
+    <section class="section" id="dominios">
+        <div class="container">
+            <span class="section-label">── DOMINIOS DEL EXAMEN ──</span>
+            <h2 class="section-title">Áreas de Conocimiento</h2>
+            <p class="section-desc">El examen SAA-C03 evalúa tu capacidad para diseñar soluciones en AWS en cuatro dominios principales.</p>
+            
+            <div class="domains-grid">
+                <!-- Domain 1 -->
+                <div class="domain-card" data-domain="1">
+                    <div class="card-number">01</div>
+                    <div class="card-icon">🔒</div>
+                    <h3 class="card-title">Arquitecturas Seguras</h3>
+                    <div class="card-weight">
+                        <div class="weight-bar">
+                            <div class="weight-fill" style="width: 30%"></div>
+                        </div>
+                        <span class="weight-text">30% del examen</span>
+                    </div>
+                    <ul class="card-topics">
+                        <li>IAM, Roles y Políticas</li>
+                        <li>VPC, Security Groups, NACLs</li>
+                        <li>KMS, Cifrado, Secrets Manager</li>
+                        <li>WAF, Shield, GuardDuty</li>
+                    </ul>
+                    <a href="#domain1-content" class="card-link" onclick="showDomainContent(1)">Estudiar →</a>
+                </div>
+
+                <!-- Domain 2 -->
+                <div class="domain-card" data-domain="2">
+                    <div class="card-number">02</div>
+                    <div class="card-icon">🔄</div>
+                    <h3 class="card-title">Arquitecturas Resilientes</h3>
+                    <div class="card-weight">
+                        <div class="weight-bar">
+                            <div class="weight-fill" style="width: 26%"></div>
+                        </div>
+                        <span class="weight-text">26% del examen</span>
+                    </div>
+                    <ul class="card-topics">
+                        <li>ELB, Auto Scaling</li>
+                        <li>SQS, SNS, EventBridge</li>
+                        <li>Multi-AZ, Multi-Region</li>
+                        <li>Disaster Recovery</li>
+                    </ul>
+                    <a href="#domain2-content" class="card-link" onclick="showDomainContent(2)">Estudiar →</a>
+                </div>
+
+                <!-- Domain 3 -->
+                <div class="domain-card" data-domain="3">
+                    <div class="card-number">03</div>
+                    <div class="card-icon">⚡</div>
+                    <h3 class="card-title">Alto Rendimiento</h3>
+                    <div class="card-weight">
+                        <div class="weight-bar">
+                            <div class="weight-fill" style="width: 24%"></div>
+                        </div>
+                        <span class="weight-text">24% del examen</span>
+                    </div>
+                    <ul class="card-topics">
+                        <li>EBS, EFS, S3 Performance</li>
+                        <li>EC2, Lambda, Contenedores</li>
+                        <li>DynamoDB, ElastiCache, Aurora</li>
+                        <li>CloudFront, Global Accelerator</li>
+                    </ul>
+                    <a href="#domain3-content" class="card-link" onclick="showDomainContent(3)">Estudiar →</a>
+                </div>
+
+                <!-- Domain 4 -->
+                <div class="domain-card" data-domain="4">
+                    <div class="card-number">04</div>
+                    <div class="card-icon">💰</div>
+                    <h3 class="card-title">Optimización de Costos</h3>
+                    <div class="card-weight">
+                        <div class="weight-bar">
+                            <div class="weight-fill" style="width: 20%"></div>
+                        </div>
+                        <span class="weight-text">20% del examen</span>
+                    </div>
+                    <ul class="card-topics">
+                        <li>S3 Lifecycle, Storage Classes</li>
+                        <li>EC2 Pricing (Spot, RI, SP)</li>
+                        <li>Aurora Serverless, DynamoDB</li>
+                        <li>Cost Explorer, Budgets</li>
+                    </ul>
+                    <a href="#domain4-content" class="card-link" onclick="showDomainContent(4)">Estudiar →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Domain Content Modal -->
+    <div class="domain-modal" id="domainModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeDomainModal()">&times;</button>
+            <div id="domainModalBody"></div>
+        </div>
+    </div>
+
+    <!-- Cronograma Section -->
+    <section class="section section-alt" id="cronograma">
+        <div class="container">
+            <span class="section-label">── PLAN DE ESTUDIO ──</span>
+            <h2 class="section-title">Cronograma de 8 Semanas</h2>
+            <p class="section-desc">Un plan estructurado para prepararte de forma efectiva para el examen.</p>
+            
+            <div class="timeline">
+                <div class="timeline-item" data-week="1-2">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <h4>Semanas 1-2</h4>
+                        <p>Dominio 1: Arquitecturas Seguras</p>
+                        <span class="timeline-detail">IAM, VPC, Cifrado, WAF, CloudTrail</span>
+                    </div>
+                </div>
+                <div class="timeline-item" data-week="3-4">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <h4>Semanas 3-4</h4>
+                        <p>Dominio 2: Arquitecturas Resilientes</p>
+                        <span class="timeline-detail">ELB, Auto Scaling, SQS, DR, Route 53</span>
+                    </div>
+                </div>
+                <div class="timeline-item" data-week="5-6">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <h4>Semanas 5-6</h4>
+                        <p>Dominio 3: Alto Rendimiento</p>
+                        <span class="timeline-detail">EC2, Lambda, DynamoDB, CloudFront, Caching</span>
+                    </div>
+                </div>
+                <div class="timeline-item" data-week="7">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <h4>Semana 7</h4>
+                        <p>Dominio 4: Optimización de Costos</p>
+                        <span class="timeline-detail">Pricing, Spot, RIs, S3 Lifecycle, Budgets</span>
+                    </div>
+                </div>
+                <div class="timeline-item" data-week="8">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <h4>Semana 8</h4>
+                        <p>Repaso Final + Exámenes de Práctica</p>
+                        <span class="timeline-detail">2 exámenes completos, revisión de áreas débiles</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quiz Section -->
+    <section class="section" id="quiz">
+        <div class="container">
+            <span class="section-label">── PRÁCTICA ──</span>
+            <h2 class="section-title">Quiz Rápido</h2>
+            <p class="section-desc">Pon a prueba tus conocimientos con estas preguntas de práctica.</p>
+            
+            <div class="quiz-container" id="quizContainer">
+                <div class="quiz-progress">
+                    <span id="quizProgress">Pregunta 1 de 10</span>
+                    <div class="quiz-progress-bar">
+                        <div class="quiz-progress-fill" id="quizProgressFill"></div>
+                    </div>
+                </div>
+                
+                <div class="quiz-question" id="quizQuestion">
+                    <h3 id="questionText"></h3>
+                    <div class="quiz-options" id="quizOptions"></div>
+                </div>
+                
+                <div class="quiz-feedback" id="quizFeedback"></div>
+                
+                <div class="quiz-actions">
+                    <button class="btn btn-secondary" id="btnPrev" onclick="prevQuestion()" disabled>← Anterior</button>
+                    <button class="btn btn-primary" id="btnNext" onclick="nextQuestion()">Siguiente →</button>
+                </div>
+            </div>
+            
+            <div class="quiz-results" id="quizResults" style="display:none;">
+                <div class="results-card">
+                    <h3>Resultados del Quiz</h3>
+                    <div class="results-score" id="resultsScore"></div>
+                    <div class="results-breakdown" id="resultsBreakdown"></div>
+                    <button class="btn btn-primary" onclick="restartQuiz()">Intentar de Nuevo</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Progress Section -->
+    <section class="section section-alt" id="progreso">
+        <div class="container">
+            <span class="section-label">── TU PROGRESO ──</span>
+            <h2 class="section-title">Seguimiento de Estudio</h2>
+            <p class="section-desc">Marca los temas que has completado para visualizar tu avance.</p>
+            
+            <div class="progress-overview">
+                <div class="progress-circle-container">
+                    <svg class="progress-circle" viewBox="0 0 120 120">
+                        <circle class="progress-bg" cx="60" cy="60" r="54"></circle>
+                        <circle class="progress-fill-circle" id="progressCircle" cx="60" cy="60" r="54"></circle>
+                    </svg>
+                    <div class="progress-percentage" id="progressPercentage">0%</div>
+                </div>
+                <div class="progress-details">
+                    <h4>Progreso General</h4>
+                    <p>Marca los temas completados en cada dominio</p>
+                </div>
+            </div>
+
+            <div class="checklist-grid">
+                <div class="checklist-card">
+                    <h4>🔒 Dominio 1 - Seguridad</h4>
+                    <label class="check-item"><input type="checkbox" class="progress-check" data-domain="1"> IAM y Políticas</label>
+                    <label class="check-item"><input type="checkbox" class="progress-check" data-domain="1"> VPC y Redes</label>
+                    <label class="check-item"><input type="checkbox" class="progress-check" data-domain="1"> Cifrado (KMS, CloudHSM)</label>
+                    <label class="check-item"><input type="checkbox" class="progress-check" data-domain="1"> WAF, Shield, GuardDuty</label>
+                    <label class="check-item"><input type="checkbox" class="progress-check" data-domain="1"> CloudTrail, Config</label>
+                    <label class="check-item"><input type="checkbox" class="progress-check" data-domain="1"> Cognito, Federation</label>
+                </div>
+                <div class="checklist-card">
+                    <h4>🔄 Dominio 2 - Resiliencia</h4>
+                    <label class="check-item"><input type="checkbox" class="progress-check" data-domain="2"> ELB (ALB, NLB)</label>
+                    <label class="check-item"><input type="checkbox" class="progress-check" data-domain="2"> Auto Scaling</label>
+                    <label class="check-item"><input type="checkbox" class="progress-check" data-domain="2"> SQS, SNS, EventBridge</label>
+                    <label class="check-item"><input type="checkbox" class="progress-check" data-domain="2"> RDS Multi-AZ, Aurora</label>
+                    <label class="check-item"><input type="checkbox" class="progress-check" data-domain="2"> Route 53, DR</label>
+                    <label class="check-item"><input type="checkbox" class="progress-check" data-domain="2"> Backup, S3 Lifecycle</label>
+                </div>
+                <div class="checklist-card">
+                    <h4>⚡ Dominio 3 - Rendimiento</h4>
+                    <label class="check-item"><input type="checkbox" class="progress-check" data-domain="3"> EBS, EFS, FSx</label>
+                    <label class="check-item"><input type="checkbox" class="progress-check" data-domain="3"> EC2 Familias, Placement</label>
+                    <label class="check-item"><input type="checkbox" class="progress-check" data-domain="3"> Lambda, Contenedores</label>
+                    <label class="check-item"><input type="checkbox" class="progress-check" data-domain="3"> DynamoDB, ElastiCache</label>
+                    <label class="check-item"><input type="checkbox" class="progress-check" data-domain="3"> CloudFront, Global Acc.</label>
+                    <label class="check-item"><input type="checkbox" class="progress-check" data-domain="3"> S3 Performance</label>
+                </div>
+                <div class="checklist-card">
+                    <h4>💰 Dominio 4 - Costos</h4>
+                    <label class="check-item"><input type="checkbox" class="progress-check" data-domain="4"> EC2 Pricing Models</label>
+                    <label class="check-item"><input type="checkbox" class="progress-check" data-domain="4"> S3 Storage Classes</label>
+                    <label class="check-item"><input type="checkbox" class="progress-check" data-domain="4"> Spot Instances</label>
+                    <label class="check-item"><input type="checkbox" class="progress-check" data-domain="4"> Serverless Cost Opt.</label>
+                    <label class="check-item"><input type="checkbox" class="progress-check" data-domain="4"> Data Transfer Costs</label>
+                    <label class="check-item"><input type="checkbox" class="progress-check" data-domain="4"> Cost Management Tools</label>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Resources Section -->
+    <section class="section" id="recursos">
+        <div class="container">
+            <span class="section-label">── RECURSOS ──</span>
+            <h2 class="section-title">Material Adicional</h2>
+            
+            <div class="resources-grid">
+                <a href="https://aws.amazon.com/architecture/well-architected/" target="_blank" class="resource-card">
+                    <div class="resource-icon">📐</div>
+                    <h4>Well-Architected Framework</h4>
+                    <p>Los 6 pilares de una arquitectura bien diseñada en AWS</p>
+                </a>
+                <a href="https://docs.aws.amazon.com/" target="_blank" class="resource-card">
+                    <div class="resource-icon">📖</div>
+                    <h4>AWS Documentation</h4>
+                    <p>Documentación oficial de todos los servicios AWS</p>
+                </a>
+                <a href="https://aws.amazon.com/free/" target="_blank" class="resource-card">
+                    <div class="resource-icon">🆓</div>
+                    <h4>AWS Free Tier</h4>
+                    <p>Practica gratis con los servicios incluidos en el free tier</p>
+                </a>
+                <a href="https://skillbuilder.aws/" target="_blank" class="resource-card">
+                    <div class="resource-icon">🎓</div>
+                    <h4>AWS Skill Builder</h4>
+                    <p>Cursos oficiales y exámenes de práctica de AWS</p>
+                </a>
+                <a href="https://calculator.aws/" target="_blank" class="resource-card">
+                    <div class="resource-icon">🧮</div>
+                    <h4>AWS Pricing Calculator</h4>
+                    <p>Calcula costos estimados de arquitecturas AWS</p>
+                </a>
+                <a href="06-practice-exam.md" class="resource-card">
+                    <div class="resource-icon">📝</div>
+                    <h4>Examen de Práctica</h4>
+                    <p>30 preguntas que simulan el formato real del examen</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4>AWS SAA-C03 <span class="gold">Study Guide</span></h4>
+                    <p>Guía completa de estudio para la certificación AWS Solutions Architect Associate.</p>
+                </div>
+                <div class="footer-col">
+                    <h5>Dominios</h5>
+                    <ul>
+                        <li><a href="#dominios">Arquitecturas Seguras</a></li>
+                        <li><a href="#dominios">Arquitecturas Resilientes</a></li>
+                        <li><a href="#dominios">Alto Rendimiento</a></li>
+                        <li><a href="#dominios">Optimización de Costos</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h5>Recursos</h5>
+                    <ul>
+                        <li><a href="#cronograma">Cronograma</a></li>
+                        <li><a href="#quiz">Quiz de Práctica</a></li>
+                        <li><a href="#progreso">Progreso</a></li>
+                        <li><a href="06-practice-exam.md">Examen Completo</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h5>Archivos MD</h5>
+                    <ul>
+                        <li><a href="01-secure-architectures.md">Dominio 1</a></li>
+                        <li><a href="02-resilient-architectures.md">Dominio 2</a></li>
+                        <li><a href="03-high-performing-architectures.md">Dominio 3</a></li>
+                        <li><a href="04-cost-optimized-architectures.md">Dominio 4</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 AWS Study Guide. No afiliado con Amazon Web Services.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

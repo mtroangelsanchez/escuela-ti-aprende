@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kubernetes, Tanzu & PCF - Guía de Estudio</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#hero" class="nav-logo">
+                <span class="logo-icon">☸️</span>
+                <span class="logo-text">K8s <span class="gold">Tanzu & PCF</span></span>
+            </a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#dominios" class="nav-link">Dominios</a></li>
+                <li><a href="#cronograma" class="nav-link">Cronograma</a></li>
+                <li><a href="#quiz" class="nav-link">Quiz</a></li>
+                <li><a href="#recursos" class="nav-link">Recursos</a></li>
+                <li><a href="#progreso" class="nav-link">Progreso</a></li>
+            </ul>
+            <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <span class="hero-badge">Cloud Native 2026</span>
+            <h1 class="hero-title">Kubernetes, Tanzu<br>& <span class="gold">Cloud Foundry</span></h1>
+            <p class="hero-subtitle">Guía completa de estudio para dominar Kubernetes, VMware Tanzu y Pivotal Cloud Foundry. Desde fundamentos hasta operaciones enterprise.</p>
+            <div class="hero-stats">
+                <div class="stat">
+                    <span class="stat-number">4</span>
+                    <span class="stat-label">Dominios</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">60</span>
+                    <span class="stat-label">Preguntas</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">10</span>
+                    <span class="stat-label">Semanas</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">72%</span>
+                    <span class="stat-label">Puntaje Mín.</span>
+                </div>
+            </div>
+            <a href="#dominios" class="hero-cta">
+                <span class="play-icon">▶</span>
+                Comenzar Estudio
+            </a>
+        </div>
+    </section>
+
+    <!-- Domains Section -->
+    <section class="section" id="dominios">
+        <div class="container">
+            <span class="section-label">── DOMINIOS DE ESTUDIO ──</span>
+            <h2 class="section-title">Áreas de Conocimiento</h2>
+            <p class="section-desc">Domina las tres tecnologías clave de plataformas cloud-native enterprise.</p>
+            
+            <div class="domains-grid">
+                <!-- Domain 1 -->
+                <div class="domain-card" data-domain="1">
+                    <div class="card-number">01</div>
+                    <div class="card-icon">☸️</div>
+                    <h3 class="card-title">Kubernetes Fundamentos</h3>
+                    <div class="card-weight">
+                        <div class="weight-bar">
+                            <div class="weight-fill" style="width: 30%"></div>
+                        </div>
+                        <span class="weight-text">30% del contenido</span>
+                    </div>
+                    <ul class="card-topics">
+                        <li>Arquitectura: Control Plane, Nodes</li>
+                        <li>Pods, Deployments, Services</li>
+                        <li>Ingress, NetworkPolicies</li>
+                        <li>Storage, ConfigMaps, RBAC</li>
+                    </ul>
+                    <a href="#" class="card-link" onclick="showDomainContent(1); return false;">Estudiar →</a>
+                </div>
+
+                <!-- Domain 2 -->
+                <div class="domain-card" data-domain="2">
+                    <div class="card-number">02</div>
+                    <div class="card-icon">⚙️</div>
+                    <h3 class="card-title">Kubernetes Avanzado</h3>
+                    <div class="card-weight">
+                        <div class="weight-bar">
+                            <div class="weight-fill" style="width: 20%"></div>
+                        </div>
+                        <span class="weight-text">20% del contenido</span>
+                    </div>
+                    <ul class="card-topics">
+                        <li>StatefulSets, DaemonSets, Jobs</li>
+                        <li>HPA, Taints, Affinity, PDB</li>
+                        <li>Helm, Security, Probes</li>
+                        <li>Blue/Green, Canary Deploys</li>
+                    </ul>
+                    <a href="#" class="card-link" onclick="showDomainContent(2); return false;">Estudiar →</a>
+                </div>
+
+                <!-- Domain 3 -->
+                <div class="domain-card" data-domain="3">
+                    <div class="card-number">03</div>
+                    <div class="card-icon">🏗️</div>
+                    <h3 class="card-title">VMware Tanzu</h3>
+                    <div class="card-weight">
+                        <div class="weight-bar">
+                            <div class="weight-fill" style="width: 25%"></div>
+                        </div>
+                        <span class="weight-text">25% del contenido</span>
+                    </div>
+                    <ul class="card-topics">
+                        <li>TKG: Management + Workload Clusters</li>
+                        <li>TAP: Supply Chains, Cartographer</li>
+                        <li>TMC: Multi-Cluster Management</li>
+                        <li>vSphere with Tanzu, Pinniped</li>
+                    </ul>
+                    <a href="#" class="card-link" onclick="showDomainContent(3); return false;">Estudiar →</a>
+                </div>
+
+                <!-- Domain 4 -->
+                <div class="domain-card" data-domain="4">
+                    <div class="card-number">04</div>
+                    <div class="card-icon">☁️</div>
+                    <h3 class="card-title">Cloud Foundry / TAS</h3>
+                    <div class="card-weight">
+                        <div class="weight-bar">
+                            <div class="weight-fill" style="width: 25%"></div>
+                        </div>
+                        <span class="weight-text">25% del contenido</span>
+                    </div>
+                    <ul class="card-topics">
+                        <li>cf push, Buildpacks, Diego</li>
+                        <li>Services, Marketplace, Binding</li>
+                        <li>Orgs/Spaces, Blue-Green Deploy</li>
+                        <li>BOSH, Logging, ASGs</li>
+                    </ul>
+                    <a href="#" class="card-link" onclick="showDomainContent(4); return false;">Estudiar →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Domain Content Modal -->
+    <div class="domain-modal" id="domainModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeDomainModal()">&times;</button>
+            <div id="domainModalBody"></div>
+        </div>
+    </div>
+
+    <!-- Cronograma Section -->
+    <section class="section section-alt" id="cronograma">
+        <div class="container">
+            <span class="section-label">── PLAN DE ESTUDIO ──</span>
+            <h2 class="section-title">Cronograma de 10 Semanas</h2>
+            <p class="section-desc">Un plan estructurado para dominar las tres tecnologías cloud-native enterprise.</p>
+            
+            <div class="timeline">
+                <div class="timeline-item" data-week="1-2">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <h4>Semanas 1-2</h4>
+                        <p>Kubernetes Fundamentos</p>
+                        <span class="timeline-detail">Arquitectura, Pods, Deployments, Services, Ingress, Storage, RBAC</span>
+                    </div>
+                </div>
+                <div class="timeline-item" data-week="3-4">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <h4>Semanas 3-4</h4>
+                        <p>Kubernetes Avanzado</p>
+                        <span class="timeline-detail">StatefulSets, HPA, Helm, Security, Scheduling, Estrategias de Deploy</span>
+                    </div>
+                </div>
+                <div class="timeline-item" data-week="5-6">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <h4>Semanas 5-6</h4>
+                        <p>VMware Tanzu</p>
+                        <span class="timeline-detail">TKG, TAP, TMC, Supply Chains, Packages, vSphere with Tanzu</span>
+                    </div>
+                </div>
+                <div class="timeline-item" data-week="7-8">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <h4>Semanas 7-8</h4>
+                        <p>Pivotal Cloud Foundry / TAS</p>
+                        <span class="timeline-detail">cf push, Buildpacks, Services, BOSH, Blue-Green, Logging</span>
+                    </div>
+                </div>
+                <div class="timeline-item" data-week="9">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <h4>Semana 9</h4>
+                        <p>Integración y Comparativas</p>
+                        <span class="timeline-detail">Cuándo usar qué, migración CF→K8s, patrones multi-cloud, CI/CD</span>
+                    </div>
+                </div>
+                <div class="timeline-item" data-week="10">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <h4>Semana 10</h4>
+                        <p>Repaso Final + Exámenes de Práctica</p>
+                        <span class="timeline-detail">3 exámenes completos (60 preguntas), revisión de áreas débiles</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quiz Section -->
+    <section class="section" id="quiz">
+        <div class="container">
+            <span class="section-label">── PRÁCTICA ──</span>
+            <h2 class="section-title">Quiz Rápido</h2>
+            <p class="section-desc">Pon a prueba tus conocimientos con preguntas de Kubernetes, Tanzu y PCF.</p>
+            
+            <div class="quiz-container" id="quizContainer">
+                <div class="quiz-progress">
+                    <span id="quizProgress">Pregunta 1 de 15</span>
+                    <div class="quiz-progress-bar">
+                        <div class="quiz-progress-fill" id="quizProgressFill"></div>
+                    </div>
+                </div>
+                
+                <div class="quiz-question" id="quizQuestion">
+                    <h3 id="questionText"></h3>
+                    <div class="quiz-options" id="quizOptions"></div>
+                </div>
+                
+                <div class="quiz-feedback" id="quizFeedback"></div>
+                
+                <div class="quiz-actions">
+                    <button class="btn btn-secondary" id="btnPrev" onclick="prevQuestion()" disabled>← Anterior</button>
+                    <button class="btn btn-primary" id="btnNext" onclick="nextQuestion()">Siguiente →</button>
+                </div>
+            </div>
+            
+            <div class="quiz-results" id="quizResults" style="display:none;">
+                <div class="results-card">
+                    <h3>Resultados del Quiz</h3>
+                    <div class="results-score" id="resultsScore"></div>
+                    <div class="results-breakdown" id="resultsBreakdown"></div>
+                    <button class="btn btn-primary" onclick="restartQuiz()">Intentar de Nuevo</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Progress Section -->
+    <section class="section section-alt" id="progreso">
+        <div class="container">
+            <span class="section-label">── TU PROGRESO ──</span>
+            <h2 class="section-title">Seguimiento de Estudio</h2>
+            <p class="section-desc">Marca los temas que has completado para visualizar tu avance.</p>
+            
+            <div class="progress-overview">
+                <div class="progress-circle-container">
+                    <svg class="progress-circle" viewBox="0 0 120 120">
+                        <circle class="progress-bg" cx="60" cy="60" r="54"></circle>
+                        <circle class="progress-fill-circle" id="progressCircle" cx="60" cy="60" r="54"></circle>
+                    </svg>
+                    <div class="progress-percentage" id="progressPercentage">0%</div>
+                </div>
+                <div class="progress-details">
+                    <h4>Progreso General</h4>
+                    <p>Marca los temas completados en cada dominio</p>
+                </div>
+            </div>
+
+            <div class="checklist-grid">
+                <div class="checklist-card">
+                    <h4>☸️ Kubernetes Fundamentos</h4>
+                    <label class="check-item"><input type="checkbox" class="progress-check" data-domain="1"> Arquitectura del Cluster</label>
+                    <label class="check-item"><input type="checkbox" class="progress-check" data-domain="1"> Pods y Deployments</label>
+                    <label class="check-item"><input type="checkbox" class="progress-check" data-domain="1"> Services e Ingress</label>
+                    <label class="check-item"><input type="checkbox" class="progress-check" data-domain="1"> Storage (PV, PVC, SC)</label>
+                    <label class="check-item"><input type="checkbox" class="progress-check" data-domain="1"> ConfigMaps y Secrets</label>
+                    <label class="check-item"><input type="checkbox" class="progress-check" data-domain="1"> RBAC y NetworkPolicies</label>
+                    <label class="check-item"><input type="checkbox" class="progress-check" data-domain="1"> Namespaces y Quotas</label>
+                </div>
+                <div class="checklist-card">
+                    <h4>⚙️ Kubernetes Avanzado</h4>
+                    <label class="check-item"><input type="checkbox" class="progress-check" data-domain="2"> StatefulSets y DaemonSets</label>
+                    <label class="check-item"><input type="checkbox" class="progress-check" data-domain="2"> Jobs y CronJobs</label>
+                    <label class="check-item"><input type="checkbox" class="progress-check" data-domain="2"> HPA y VPA</label>
+                    <label class="check-item"><input type="checkbox" class="progress-check" data-domain="2"> Taints, Tolerations, Affinity</label>
+                    <label class="check-item"><input type="checkbox" class="progress-check" data-domain="2"> Helm Charts</label>
+                    <label class="check-item"><input type="checkbox" class="progress-check" data-domain="2"> Pod Security Standards</label>
+                    <label class="check-item"><input type="checkbox" class="progress-check" data-domain="2"> Estrategias de Deploy</label>
+                </div>
+                <div class="checklist-card">
+                    <h4>🏗️ VMware Tanzu</h4>
+                    <label class="check-item"><input type="checkbox" class="progress-check" data-domain="3"> TKG Architecture</label>
+                    <label class="check-item"><input type="checkbox" class="progress-check" data-domain="3"> TAP y Supply Chains</label>
+                    <label class="check-item"><input type="checkbox" class="progress-check" data-domain="3"> Tanzu Mission Control</label>
+                    <label class="check-item"><input type="checkbox" class="progress-check" data-domain="3"> TKG Packages</label>
+                    <label class="check-item"><input type="checkbox" class="progress-check" data-domain="3"> vSphere with Tanzu</label>
+                    <label class="check-item"><input type="checkbox" class="progress-check" data-domain="3"> Pinniped (Auth)</label>
+                </div>
+                <div class="checklist-card">
+                    <h4>☁️ Cloud Foundry / TAS</h4>
+                    <label class="check-item"><input type="checkbox" class="progress-check" data-domain="4"> Arquitectura CF (Diego, Router)</label>
+                    <label class="check-item"><input type="checkbox" class="progress-check" data-domain="4"> cf push y Buildpacks</label>
+                    <label class="check-item"><input type="checkbox" class="progress-check" data-domain="4"> Services y Marketplace</label>
+                    <label class="check-item"><input type="checkbox" class="progress-check" data-domain="4"> Orgs, Spaces, Roles</label>
+                    <label class="check-item"><input type="checkbox" class="progress-check" data-domain="4"> Blue-Green Deploy</label>
+                    <label class="check-item"><input type="checkbox" class="progress-check" data-domain="4"> BOSH y Operaciones</label>
+                    <label class="check-item"><input type="checkbox" class="progress-check" data-domain="4"> Logging y ASGs</label>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Resources Section -->
+    <section class="section" id="recursos">
+        <div class="container">
+            <span class="section-label">── RECURSOS ──</span>
+            <h2 class="section-title">Material Adicional</h2>
+            
+            <div class="resources-grid">
+                <a href="https://kubernetes.io/docs/" target="_blank" class="resource-card">
+                    <div class="resource-icon">📖</div>
+                    <h4>Kubernetes Docs</h4>
+                    <p>Documentación oficial de Kubernetes con tutoriales y referencia de API</p>
+                </a>
+                <a href="https://docs.vmware.com/en/VMware-Tanzu/services/tanzu-platform/index.html" target="_blank" class="resource-card">
+                    <div class="resource-icon">🏗️</div>
+                    <h4>Tanzu Documentation</h4>
+                    <p>Documentación oficial de VMware Tanzu Platform</p>
+                </a>
+                <a href="https://docs.cloudfoundry.org/" target="_blank" class="resource-card">
+                    <div class="resource-icon">☁️</div>
+                    <h4>Cloud Foundry Docs</h4>
+                    <p>Documentación oficial de Cloud Foundry open source</p>
+                </a>
+                <a href="https://killercoda.com/playgrounds/scenario/kubernetes" target="_blank" class="resource-card">
+                    <div class="resource-icon">🎮</div>
+                    <h4>KillerCoda Labs</h4>
+                    <p>Laboratorios interactivos para practicar Kubernetes en el navegador</p>
+                </a>
+                <a href="https://helm.sh/docs/" target="_blank" class="resource-card">
+                    <div class="resource-icon">⚓</div>
+                    <h4>Helm Documentation</h4>
+                    <p>Guía completa del package manager de Kubernetes</p>
+                </a>
+                <a href="06-practice-exam.md" class="resource-card">
+                    <div class="resource-icon">📝</div>
+                    <h4>Examen de Práctica</h4>
+                    <p>60 preguntas que simulan formato real de certificación</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4>K8s, Tanzu & PCF <span class="gold">Study Guide</span></h4>
+                    <p>Guía completa para dominar las tecnologías cloud-native enterprise más demandadas en la industria.</p>
+                </div>
+                <div class="footer-col">
+                    <h5>Dominios</h5>
+                    <ul>
+                        <li><a href="#dominios">Kubernetes Fundamentos</a></li>
+                        <li><a href="#dominios">Kubernetes Avanzado</a></li>
+                        <li><a href="#dominios">VMware Tanzu</a></li>
+                        <li><a href="#dominios">Cloud Foundry / TAS</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h5>Recursos</h5>
+                    <ul>
+                        <li><a href="#cronograma">Cronograma</a></li>
+                        <li><a href="#quiz">Quiz de Práctica</a></li>
+                        <li><a href="#progreso">Progreso</a></li>
+                        <li><a href="06-practice-exam.md">Examen Completo</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h5>Archivos MD</h5>
+                    <ul>
+                        <li><a href="01-kubernetes-fundamentals.md">Kubernetes Fundamentos</a></li>
+                        <li><a href="02-kubernetes-advanced.md">Kubernetes Avanzado</a></li>
+                        <li><a href="03-vmware-tanzu.md">VMware Tanzu</a></li>
+                        <li><a href="04-pivotal-cloud-foundry.md">Cloud Foundry / TAS</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 K8s Study Guide. No afiliado con CNCF, VMware o Cloud Foundry Foundation.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
