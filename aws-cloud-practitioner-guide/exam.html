@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Simulador AWS Cloud Practitioner (CLF-C02)</title>
+<style>
+:root{--bg:#f2f3f3;--fg:#16191f;--mut:#5f6b7a;--nav:#232f3e;--acc:#ec7211;--ok:#1d8102;--bad:#d13212;--bd:#d5dbdb;--card:#fff;--flag:#f0a30a;--sel:#e6f2ff}
+*{box-sizing:border-box}
+body{margin:0;font:16px/1.55 system-ui,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--fg)}
+header{background:var(--nav);color:#fff;padding:10px 20px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+header h1{font-size:17px;margin:0}
+a{color:#0a5fb4}
+#timer{font:600 18px ui-monospace,Consolas,monospace;background:#37475a;padding:4px 12px;border-radius:6px}
+#timer.low{background:var(--bad)}
+main{max-width:1100px;margin:0 auto;padding:20px 16px 60px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:20px 24px;margin-bottom:16px}
+button{font:inherit;cursor:pointer;border-radius:6px;border:1px solid var(--bd);background:#fff;padding:8px 16px}
+button:hover{background:#f1f3f3}
+button.primary{background:var(--acc);border-color:var(--acc);color:#fff;font-weight:600}
+button.primary:hover{background:#d4630a}
+button:disabled{opacity:.5;cursor:not-allowed}
+:focus-visible{outline:3px solid #0a5fb4;outline-offset:2px}
+.layout{display:grid;grid-template-columns:1fr 250px;gap:16px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}}
+.meta{color:var(--mut);font-size:14px;margin-bottom:8px;display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.qtext{font-size:18px;margin:6px 0 16px}
+fieldset{border:0;margin:0;padding:0}
+legend{position:absolute;left:-9999px}
+.opt{display:flex;gap:10px;align-items:flex-start;border:1px solid var(--bd);border-radius:8px;padding:10px 12px;margin-bottom:8px;cursor:pointer;background:#fff}
+.opt:hover{background:#f7fafc}
+.opt.checked{background:var(--sel);border-color:#0a5fb4}
+.opt input{margin-top:5px;flex:none}
+.opt.right{background:#eaf7e6;border-color:var(--ok)}
+.opt.wrong{background:#fdecea;border-color:var(--bad)}
+.nav{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+.nav .sp{flex:1}
+#palette{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+#palette button{padding:6px 0;font-size:14px;position:relative}
+#palette button.answered{background:#d7e9ff;border-color:#0a5fb4}
+#palette button.current{outline:3px solid var(--nav)}
+#palette button.flagged::after{content:"";position:absolute;top:2px;right:2px;width:0;height:0;border-left:10px solid transparent;border-top:10px solid var(--flag)}
+#palette button.right{background:#eaf7e6;border-color:var(--ok)}
+#palette button.wrong{background:#fdecea;border-color:var(--bad)}
+.legend{font-size:13px;color:var(--mut);margin-top:10px}
+.big{font-size:56px;font-weight:700;line-height:1.1}
+.pass{color:var(--ok)}.fail{color:var(--bad)}
+table{border-collapse:collapse;width:100%}
+th,td{border-bottom:1px solid var(--bd);padding:8px;text-align:left}
+.bar{background:#e3e6e6;border-radius:6px;height:12px;overflow:hidden}
+.bar>i{display:block;height:100%;background:var(--acc)}
+.exp{background:#f7f9fa;border-left:4px solid #0a5fb4;padding:10px 14px;margin-top:12px;border-radius:4px}
+.tag{display:inline-block;font-size:12px;padding:1px 8px;border-radius:10px;background:#e3e6e6;margin-left:6px}
+.hidden{display:none}
+label.inline{display:flex;gap:8px;align-items:center;margin:8px 0}
+dialog{border:1px solid var(--bd);border-radius:10px;max-width:480px;padding:20px 24px}
+dialog::backdrop{background:rgba(0,0,0,.4)}
+</style>
+</head>
+<body>
+<header>
+  <h1>AWS Cloud Practitioner (CLF-C02): Simulador</h1>
+  <div><span id="timer" class="hidden" role="timer" aria-label="Tiempo restante">90:00</span></div>
+</header>
+<main id="app"></main>
+
+<dialog id="dlg" aria-labelledby="dlgTitle">
+  <h2 id="dlgTitle" style="margin-top:0">Resumen antes de enviar</h2>
+  <p id="dlgBody"></p>
+  <div style="display:flex;gap:8px;justify-content:flex-end">
+    <button id="dlgCancel">Seguir revisando</button>
+    <button id="dlgOk" class="primary">Terminar examen</button>
+  </div>
+</dialog>
+
+<script src="questions.js"></script>
+<script>
+(function () {
+  'use strict';
+  var TOTAL_SECONDS = 90 * 60;
+  var KEY = 'clfc02_state_v1';
+  var LET = ['A', 'B', 'C', 'D', 'E', 'F'];
+  var DN = { 1: 'Conceptos de la nube', 2: 'Seguridad y cumplimiento', 3: 'Tecnología y servicios', 4: 'Facturación, precios y soporte' };
+  var DW = { 1: 24, 2: 30, 3: 34, 4: 12 };
+  var app = document.getElementById('app');
+  var timerEl = document.getElementById('timer');
+  var dlg = document.getElementById('dlg');
+  var S = null, tick = null;
+
+  function el(tag, attrs, kids) {
+    var e = document.createElement(tag);
+    if (attrs) Object.keys(attrs).forEach(function (k) {
+      if (k === 'text') e.textContent = attrs[k];
+      else if (k.indexOf('on') === 0) e.addEventListener(k.slice(2), attrs[k]);
+      else if (attrs[k] !== false && attrs[k] != null) e.setAttribute(k, attrs[k] === true ? '' : attrs[k]);
+    });
+    (kids || []).forEach(function (c) { if (c) e.appendChild(typeof c === 'string' ? document.createTextNode(c) : c); });
+    return e;
+  }
+  function clear(n) { while (n.firstChild) n.removeChild(n.firstChild); }
+  function shuffle(a) { a = a.slice(); for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+  function fmt(s) { s = Math.max(0, s); var m = Math.floor(s / 60), r = s % 60; return (m < 10 ? '0' : '') + m + ':' + (r < 10 ? '0' : '') + r; }
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} }
+  function load() { try { return JSON.parse(localStorage.getItem(KEY)); } catch (e) { return null; } }
+  function drop() { try { localStorage.removeItem(KEY); } catch (e) {} }
+  function qOf(pos) { return window.QUESTIONS[S.order[pos]]; }
+  function remaining() { return Math.max(0, TOTAL_SECONDS - Math.floor((Date.now() - S.start) / 1000)); }
+  function isCorrect(q, ans) {
+    ans = (ans || []).slice().sort();
+    return ans.length === q.a.length && ans.every(function (v, i) { return v === q.a[i]; });
+  }
+
+  /* ---------- Pantalla de inicio ---------- */
+  function showStart() {
+    clearInterval(tick); timerEl.classList.add('hidden'); clear(app);
+    var saved = load();
+    var cb = el('input', { type: 'checkbox', id: 'shuf', checked: true });
+    var card = el('div', { class: 'card' }, [
+      el('h2', { text: 'Simulacro cronometrado del examen CLF-C02' }),
+      el('p', { text: 'Replica el formato del examen: 65 preguntas, 90 minutos, opción única y respuesta múltiple. Puedes marcar preguntas para revisar y cambiar respuestas hasta enviar. Al final verás tu puntaje estimado, el desglose por dominio y la explicación de cada pregunta.' }),
+      el('table', null, [
+        el('tbody', null, [
+          row('Preguntas', '65'), row('Tiempo', '90 minutos'), row('Aprobación (estimada)', '700 / 1000'),
+          row('Dominios', '1: Conceptos 24 %, 2: Seguridad 30 %, 3: Tecnología 34 %, 4: Facturación 12 %')
+        ])
+      ]),
+      el('label', { class: 'inline', for: 'shuf' }, [cb, 'Barajar el orden de las preguntas']),
+      el('p', { class: 'meta', text: 'Las preguntas de "Seleccione DOS" se califican como todo o nada. No hay penalización por respuestas incorrectas: responde todas.' }),
+      el('div', { class: 'nav' }, [
+        el('button', { class: 'primary', text: 'Comenzar examen', onclick: function () { begin(cb.checked); } }),
+        saved && !saved.done ? el('button', { text: 'Continuar intento (' + fmt(Math.max(0, TOTAL_SECONDS - Math.floor((Date.now() - saved.start) / 1000))) + ' restantes)', onclick: function () { S = saved; run(); } }) : null,
+        el('a', { href: 'guia.html', text: 'Ir a la guía de estudio', style: 'align-self:center;margin-left:8px' })
+      ])
+    ]);
+    app.appendChild(card);
+    function row(a, b) { return el('tr', null, [el('th', { text: a }), el('td', { text: b })]); }
+  }
+
+  function begin(doShuffle) {
+    var idx = window.QUESTIONS.map(function (_, i) { return i; });
+    S = { order: doShuffle ? shuffle(idx) : idx, ans: {}, flag: {}, pos: 0, start: Date.now(), done: false, endedAt: null };
+    save(); run();
+  }
+
+  /* ---------- Examen en curso ---------- */
+  function run() {
+    if (S.done) { showResults(); return; }
+    timerEl.classList.remove('hidden');
+    clearInterval(tick);
+    tick = setInterval(function () {
+      var r = remaining();
+      timerEl.textContent = fmt(r);
+      timerEl.classList.toggle('low', r <= 300);
+      if (r <= 0) { finish(true); }
+    }, 1000);
+    timerEl.textContent = fmt(remaining());
+    if (remaining() <= 0) { finish(true); return; }
+    render();
+  }
+
+  function render() {
+    clear(app);
+    var q = qOf(S.pos), n = S.pos + 1, total = S.order.length;
+    var cur = S.ans[S.pos] || [];
+    var multi = q.t === 'multi';
+    var fs = el('fieldset', null, [el('legend', { text: 'Opciones de la pregunta ' + n })]);
+    q.o.forEach(function (txt, i) {
+      var inp = el('input', { type: multi ? 'checkbox' : 'radio', name: 'opt', value: String(i), id: 'o' + i, checked: cur.indexOf(i) >= 0 });
+      var lab = el('label', { class: 'opt' + (cur.indexOf(i) >= 0 ? ' checked' : ''), for: 'o' + i }, [inp, el('span', null, [el('strong', { text: LET[i] + '. ' }), txt])]);
+      inp.addEventListener('change', function () {
+        var a = S.ans[S.pos] || [];
+        if (multi) { a = inp.checked ? a.concat(i) : a.filter(function (v) { return v !== i; }); }
+        else { a = [i]; }
+        if (a.length) S.ans[S.pos] = a.sort(); else delete S.ans[S.pos];
+        save(); render();
+        var f = document.getElementById('o' + i); if (f) f.focus();
+      });
+      fs.appendChild(lab);
+    });
+    var left = el('div', { class: 'card' }, [
+      el('div', { class: 'meta' }, [
+        el('span', { text: 'Pregunta ' + n + ' de ' + total }),
+        el('span', { text: multi ? 'Seleccione ' + q.a.length + ' respuestas' : 'Seleccione 1 respuesta' })
+      ]),
+      el('p', { class: 'qtext', text: q.q }),
+      fs,
+      el('div', { class: 'nav' }, [
+        el('button', { text: 'Anterior', disabled: S.pos === 0, onclick: function () { go(S.pos - 1); } }),
+        el('button', { text: S.flag[S.pos] ? 'Quitar marca' : 'Marcar para revisar', 'aria-pressed': S.flag[S.pos] ? 'true' : 'false', onclick: function () { if (S.flag[S.pos]) delete S.flag[S.pos]; else S.flag[S.pos] = true; save(); render(); } }),
+        el('span', { class: 'sp' }),
+        el('button', { text: 'Siguiente', disabled: S.pos === total - 1, onclick: function () { go(S.pos + 1); } }),
+        el('button', { class: 'primary', text: 'Terminar examen', onclick: confirmFinish })
+      ])
+    ]);
+    var pal = el('div', { id: 'palette', role: 'group', 'aria-label': 'Navegador de preguntas' });
+    for (var i = 0; i < total; i++) (function (i) {
+      var cls = [];
+      if (S.ans[i]) cls.push('answered'); if (S.flag[i]) cls.push('flagged'); if (i === S.pos) cls.push('current');
+      pal.appendChild(el('button', { class: cls.join(' '), text: String(i + 1), 'aria-label': 'Pregunta ' + (i + 1) + (S.ans[i] ? ', respondida' : ', sin responder') + (S.flag[i] ? ', marcada' : ''), onclick: function () { go(i); } }));
+    })(i);
+    var answered = Object.keys(S.ans).length;
+    var side = el('div', { class: 'card' }, [
+      el('strong', { text: 'Respondidas: ' + answered + ' / ' + total }),
+      el('div', { style: 'height:8px' }),
+      pal,
+      el('p', { class: 'legend', text: 'Azul = respondida. Triángulo naranja = marcada para revisar. Borde oscuro = pregunta actual.' })
+    ]);
+    app.appendChild(el('div', { class: 'layout' }, [left, side]));
+  }
+  function go(p) { S.pos = p; save(); render(); window.scrollTo(0, 0); }
+
+  function confirmFinish() {
+    var total = S.order.length, ans = Object.keys(S.ans).length;
+    var fl = Object.keys(S.flag).length;
+    document.getElementById('dlgBody').textContent = 'Preguntas sin responder: ' + (total - ans) + '. Marcadas para revisar: ' + fl + '. Tiempo restante: ' + fmt(remaining()) + '. Una vez enviado no podrás cambiar tus respuestas.';
+    dlg.showModal();
+  }
+  document.getElementById('dlgCancel').addEventListener('click', function () { dlg.close(); });
+  document.getElementById('dlgOk').addEventListener('click', function () { dlg.close(); finish(false); });
+
+  function finish(timeout) {
+    clearInterval(tick);
+    S.done = true; S.endedAt = Date.now(); S.timeout = !!timeout; save();
+    showResults();
+  }
+
+  /* ---------- Resultados ---------- */
+  function compute() {
+    var by = { 1: { c: 0, t: 0 }, 2: { c: 0, t: 0 }, 3: { c: 0, t: 0 }, 4: { c: 0, t: 0 } }, correct = 0;
+    S.order.forEach(function (qi, pos) {
+      var q = window.QUESTIONS[qi]; by[q.d].t++;
+      if (isCorrect(q, S.ans[pos])) { correct++; by[q.d].c++; }
+    });
+    var total = S.order.length, pct = correct / total;
+    return { by: by, correct: correct, total: total, pct: pct, scaled: Math.round(100 + 900 * pct) };
+  }
+
+  function showResults() {
+    timerEl.classList.add('hidden'); clear(app);
+    var r = compute(), pass = r.scaled >= 700;
+    var used = Math.min(TOTAL_SECONDS, Math.floor(((S.endedAt || Date.now()) - S.start) / 1000));
+    var tbody = el('tbody');
+    [1, 2, 3, 4].forEach(function (d) {
+      var x = r.by[d], p = x.t ? Math.round(100 * x.c / x.t) : 0;
+      tbody.appendChild(el('tr', null, [
+        el('td', { text: 'D' + d + '. ' + DN[d] + ' (' + DW[d] + ' %)' }),
+        el('td', { text: x.c + ' / ' + x.t }),
+        el('td', { style: 'width:30%' }, [el('div', { class: 'bar', role: 'img', 'aria-label': p + ' por ciento' }, [el('i', { style: 'width:' + p + '%' })])]),
+        el('td', { text: p + ' %' })
+      ]));
+    });
+    app.appendChild(el('div', { class: 'card' }, [
+      el('h2', { text: 'Resultado' + (S.timeout ? ' (se agotó el tiempo)' : '') }),
+      el('div', { class: 'big ' + (pass ? 'pass' : 'fail'), text: r.scaled + ' / 1000' }),
+      el('p', { text: (pass ? 'Aprobado (estimado)' : 'No aprobado (estimado)') + '. Correctas: ' + r.correct + ' de ' + r.total + ' (' + Math.round(r.pct * 100) + ' %). Tiempo usado: ' + fmt(used) + '.' }),
+      el('p', { class: 'meta', text: 'Puntaje escalado estimado de forma lineal (100 + 900 × proporción de aciertos). El examen real usa un modelo escalado que AWS no publica y solo puntúan 50 de 65 preguntas, por lo que tómalo como referencia. Apunta a mantenerte sobre 80 % en simulacros.' }),
+      el('h3', { text: 'Desglose por dominio' }),
+      el('table', null, [el('thead', null, [el('tr', null, [el('th', { text: 'Dominio' }), el('th', { text: 'Aciertos' }), el('th', { text: '' }), el('th', { text: '%' })])]), tbody]),
+      el('div', { class: 'nav' }, [
+        el('button', { class: 'primary', text: 'Nuevo intento', onclick: function () { drop(); showStart(); } }),
+        el('button', { text: 'Ver solo falladas', onclick: function () { review(true); } }),
+        el('button', { text: 'Ver todas con explicaciones', onclick: function () { review(false); } }),
+        el('a', { href: 'guia.html', text: 'Volver a la guía', style: 'align-self:center;margin-left:8px' })
+      ])
+    ]));
+    if (!document.getElementById('rev')) app.appendChild(el('div', { id: 'rev' }));
+  }
+
+  function review(onlyWrong) {
+    var host = document.getElementById('rev'); clear(host);
+    var count = 0;
+    S.order.forEach(function (qi, pos) {
+      var q = window.QUESTIONS[qi], ans = S.ans[pos] || [], ok = isCorrect(q, ans);
+      if (onlyWrong && ok) return; count++;
+      var opts = q.o.map(function (txt, i) {
+        var isRight = q.a.indexOf(i) >= 0, chosen = ans.indexOf(i) >= 0;
+        var cls = 'opt' + (isRight ? ' right' : (chosen ? ' wrong' : ''));
+        var note = (isRight ? ' (correcta)' : '') + (chosen ? ' (tu respuesta)' : '');
+        return el('div', { class: cls }, [el('span', null, [el('strong', { text: LET[i] + '. ' }), txt + note])]);
+      });
+      host.appendChild(el('div', { class: 'card' }, [
+        el('div', { class: 'meta' }, [
+          el('span', { text: 'Pregunta ' + (pos + 1) + ' · Dominio ' + q.d + ': ' + DN[q.d] }),
+          el('span', { class: ok ? 'pass' : 'fail', text: ans.length ? (ok ? 'Correcta' : 'Incorrecta') : 'Sin responder' })
+        ]),
+        el('p', { class: 'qtext', text: q.q }),
+        el('div', null, opts),
+        el('div', { class: 'exp' }, [el('strong', { text: 'Explicación: ' }), q.e])
+      ]));
+    });
+    if (!count) host.appendChild(el('div', { class: 'card' }, [el('p', { text: 'No hay preguntas falladas. Excelente resultado.' })]));
+    host.scrollIntoView();
+  }
+
+  window.addEventListener('beforeunload', function (e) { if (S && !S.done) { e.preventDefault(); e.returnValue = ''; } });
+  if (!window.QUESTIONS || window.QUESTIONS.length !== 65) { app.appendChild(el('div', { class: 'card', text: 'No se pudo cargar questions.js. Ejecuta "node build.js" en esta carpeta.' })); return; }
+  var saved = load();
+  if (saved && saved.done) { S = saved; showResults(); } else { showStart(); }
+})();
+</script>
+</body>
+</html>
